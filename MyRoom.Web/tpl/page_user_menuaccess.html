@@ -1,0 +1,98 @@
+﻿<style>
+  .table-responsive {
+    padding: 0 1em;
+}
+</style>
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3"><span translate="aside.nav.components.pages.USERACCESS">Assign Menu Access</span></h1>
+</div>
+<div class="wrapper-md" ng-controller="MenuAccessController">
+    <!-- toaster directive -->
+    <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+    <!-- / toaster directive -->
+        <div class="modal fade" id="saveMenuAccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-check">Please Confirm</span></h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Are you sure you want to save this Permissions?</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" ng-click="saveUserMenuAccess()" class="btn btn-default" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="col-md-6 column">
+                <div class="panel panel-default shadow">
+                    <div class="panel-body">
+                        <div class="row clearfix">
+                            <div class="col-md-12 column">
+                                <h4>USER LIST</h4>
+                                <hr />
+                                <user-select></user-select>
+                            </div>
+                            <!--<div class="col-sm-2 control-label">Users</div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<label class="col-sm-2 control-label">List Hotel</label>-->
+            <div class="col-md-6 column">
+
+                <div class="panel panel-default shadow">
+                    <div class="panel-body">
+                        <div class="row clearfix">
+                            <div class="col-md-12 column">
+                                <h4>SELECT THE ACCESS PERMISIONS TO MAIN MENU OPTIONS</h4>
+                                <hr />
+                            </div>
+
+                        </div>
+                        <div class="table-responsive">
+                            <input type="hidden" ng-model="Id" />
+                            <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped m-b-none" ng-click="getUser(user)">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Active</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in menus">
+                                        <td>{{ item.MenuAccessId }}</td>
+                                        <td>{{ item.MainMenuOption }}</td>
+                                        <!--<td>{{menu.Active}}</td>-->
+                                        <td><label class="i-checks m-b-none"><input type="checkbox" ng-model="item.checked" ng-checked="item.checked"  name="post[]" value="{{ item.MenuAccessId }}"><i></i></label></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr>
+                        </div>
+                        <div class="col-md-12 column">
+                            <button class="btn pull-right m-b-xs m-l-md btn-md btn-info btn-addon ng-pristine ng-valid ng-touched" ng-click="$state.go('app.page.user_list')"><i class="fa fa-arrow-circle-o-left"></i>Cancel</button>
+                            <button class="btn m-b-xs btn-md btn-info btn-addon pull-right" ng-click="showUserMenuAccessPopup()"><i class="fa fa-plus"></i>SAVE</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+
+            <!--<div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <button type="button" class="btn btn-default">CANCEL</button>
+                    <button type="button" class="btn btn-primary" ng-click="saveHotel()">SAVE</button>
+                </div>
+            </div>-->
+        </div>
+    </div>
+</div>

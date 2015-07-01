@@ -1,0 +1,113 @@
+﻿<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Assign Catalogues to Hotel</h1>
+</div>
+<div class="wrapper-md" ng-controller="HotelsCataloguesController">
+    <!-- toaster directive -->
+    <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+    <!-- / toaster directive -->
+    <div class="modal fade" id="popupHotelAssign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-check">Please Confirm</span></h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Do you want to save the assignment of catalogs to hotels?</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" ng-click="assignCatalog()" class="btn btn-default" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="col-md-6 column">
+                <div class="panel panel-default shadow">
+                    <div class="panel-body">
+                        <div class="row clearfix">
+                            <div class="col-md-4 column">
+                                <h4>HOTEL LIST</h4>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <div class="table-responsive b-a bg-gd dk r r-2x">
+                            <table datatable="ng" id="hoteldt" dt-options="dtOptions" dt-column-defs="dtColumnDefs"  class="table table-striped m-b-none row-border hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="hotel in hotels" ng-click="selectHotel(hotel)">
+                                        <td><span class="badge bg-info">{{ hotel.HotelId  }}</span></td>
+                                        <td>{{ hotel.Name }}</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 column">
+                <div class="panel panel-default shadow">
+                    <div class="panel-body">
+                        <div class="row clearfix">
+                            <div class="col-md-6 column">
+                                <h4>CATALOGUES LIST</h4>
+                            </div>
+                            <div class="col-md-6 column">
+                                <button class="btn m-b-xs btn-md btn-info btn-addon pull-right" ng-click="showHotelCataloguesPopup()"><i class="fa fa-plus"></i>SAVE</button>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <div class="table-responsive b-a bg-gd dk r r-2x">
+                            <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped m-b-none">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="catalog in catalogues">
+                                        <td><span class="badge bg-info">{{ catalog.CatalogId }}</span></td>
+                                        <td>{{ catalog.Name }}</td>
+                                        <td>
+                                            <label class="i-checks m-b-none">
+                                            <input type="checkbox" ng-model="catalog.checked" ng-click="catalogSelect(catalog)" ng-checked="catalog.checked" name="post[]" value="{{ catalog.Id }}"><i></i></label></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <hr>
+
+                        <div class="col-md-12 column">
+                            <button class="btn pull-right m-b-xs m-l-md btn-md btn-danger btn-addon ng-pristine ng-valid ng-touched" ng-click="$state.go('app.page.hotel_list')"><i class="fa fa-arrow-circle-o-left"></i>CANCEL</button> 
+                            <button class="btn m-b-xs btn-md btn-info btn-addon pull-right" ng-click="showHotelCataloguesPopup()"><i class="fa fa-plus"></i>SAVE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#hoteldt').on('click', 'tbody tr', function (event) {
+            $(this).addClass('highlight').siblings().removeClass('highlight');
+        });
+
+    });
+</script>

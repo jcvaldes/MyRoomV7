@@ -1,0 +1,68 @@
+﻿<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">ACTIVATE MODULES, CATEGORIES OR PRODUCTS TO HOTELS</h1>
+</div>
+<div class="wrapper-md" ng-controller="HotelsAssingProductController">
+    <!-- toaster directive -->
+    <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+    <!-- / toaster directive -->
+    <div class="modal fade" id="popupHotelAssignProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-check">Please Confirm</span></h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Do you want to assign the catalog structure to hotel?</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" ng-click="activeProduct()" class="btn btn-default" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row clearfix ">
+        <div class="col-md-3">
+
+            <div class="input-group">
+                <hotel-select></hotel-select>
+                <span class="input-group-btn">
+                    <div class="btn-group dropdown" dropdown="">
+                        <div class="btn-group dropdown open" dropdown="">
+                            <button class="btn btn-default" dropdown-toggle="" aria-haspopup="true" aria-expanded="true">Action <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <!--<li><a href="" ng-model="modify" ng-click="modify=true"><i class="fa fa-edit"></i> Assign Products or Categories</a></li>-->
+                                <li><a href="" ng-model="modify" ng-click="showHotelAssignPopup()"><i class="fa fa-edit"></i> Assign Modules, Categories or Products</a></li>
+                                <li><a href="" ng-click="$state.go('app.page.hotel_create')"><i class="fa fa-plus"></i> New Hotel</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </span>
+            </div>            
+        </div>
+        <div class="col-md-3">            
+            <button class="btn xs m-l-xs btn-md btn-info btn-addon ng-pristine ng-valid ng-touched" ng-click="showHotelAssignPopup()"><i class="fa fa-plus"></i>Save</button>
+
+            <button class="btn xs m-l-xs btn-md btn-danger btn-addon ng-pristine ng-valid ng-touched" ng-click="$state.go('app.page.hotel_list')"><i class="fa fa-arrow-circle-o-left"></i>Cancel</button>
+        </div>
+
+    </div>
+    <div class="row clearfix m-t">
+        <div class="col-md-12 column">
+            <div class="row clearfix">
+                <div class="col-md-8 column">
+                    <div class="panel panel-default shadow">
+                        <div class="panel-body">
+                            <h4>CATALOGUE STRUCTURE</h4>
+                            <hr>
+                            <hotel-catalog-tree></hotel-catalog-tree>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+</div>
+
