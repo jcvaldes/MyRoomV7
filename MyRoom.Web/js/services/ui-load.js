@@ -71,7 +71,24 @@ angular.module('ui.load', [])
             updateRoom: updateRoom
         };
     }])
+    .factory('currentUser', ['$http', '$q', function ($http, $q) {
+        var profile = {
+            isAdmins: false
+        };
+        function currentUser() {
 
+        }
+        var setProfile = function(isAdmins) {
+            profile.isAdmins = isAdmins;
+        };
+        var getProfile = function () {
+            return profile;
+        };
+        return {
+            setProfile: setProfile,
+            getProfile: getProfile
+        }
+    }])
     .factory('departmentService', ['$http', '$q', function ($http, $q) {
     	function getAll() {
     	  //  var deferred = $q.defer();
@@ -83,6 +100,17 @@ angular.module('ui.load', [])
 
     	    //return deferred.promise;
     	};
+    	function getProductssActivated(deparmentId) {
+	        debugger;
+    	    var deferred = $q.defer();
+    	    return $http.get(serviceBase + 'api/departments/products/' + deparmentId).success(function (response) {
+    	        deferred.resolve(response);
+    	    }, function (err) {
+    	        deferred.reject(err);
+    	    });
+
+    	    return deferred.promise;
+    	}
     	function saveDepartment(department) {
     	    var deferred = $q.defer();
     	    return $http.post(serviceBase + 'api/departments', department).success(function (response) {
@@ -122,6 +150,7 @@ angular.module('ui.load', [])
    
     	return {
     	    getAll: getAll,
+    	    getProductssActivated: getProductssActivated,
     	    saveDepartment: saveDepartment,
     	    removeDepartment: removeDepartment,
     	    getDepartment: getDepartment,
@@ -130,7 +159,7 @@ angular.module('ui.load', [])
     }])
 	.factory('hotelService', ['$http', '$q', function ($http, $q) {
 		function getAll() {
-		    return $http.get(serviceBase + 'api/Hotels');
+		    return $http.get(serviceBase + 'api/Hotels?rol=Admins');
 		};
 		function assignCatalog(hotelcatalogVm) {
 		    var deferred = $q.defer();
@@ -280,6 +309,17 @@ angular.module('ui.load', [])
 		    return deferred.promise;
 		}
 
+		function getDeparmentsActivated(hotelId) {
+		    debugger;
+		    var deferred = $q.defer();
+		    return $http.get(serviceBase + 'api/Departments/hotels/' + hotelId).success(function (response) {
+		        deferred.resolve(response);
+		    }, function (err) {
+		        deferred.reject(err);
+		    });
+		    return deferred.promise;
+        }
+
 		function saveActiveProduct(assignhotelelements) {
 		    var deferred = $q.defer();
 		    return $http.post(serviceBase + 'api/hotels/assignhotelelements', assignhotelelements).success(function (response) {
@@ -291,21 +331,22 @@ angular.module('ui.load', [])
 		    return deferred.promise;
 		}
 
-		return {
-			getAll: getAll,
-			saveHotel: saveHotel,
-			saveUserPermission: saveUserPermission,
-			getUserHotelId: getUserHotelId,
-			removeHotel: removeHotel,
-			getHotelCatalogId: getHotelCatalogId,
-			getHotelsByCatalogId: getHotelsByCatalogId,
-			removeUserHotel: removeUserHotel,
-			getCatalogAssignedByHotelId: getCatalogAssignedByHotelId,
-			getHotel: getHotel,
-			updateHotel: updateHotel,
-			assignCatalog: assignCatalog,
-			saveActiveProduct: saveActiveProduct,
-			getProductsActivated: getProductsActivated
+		    return {
+		        getAll: getAll,
+		        saveHotel: saveHotel,
+		        saveUserPermission: saveUserPermission,
+		        getUserHotelId: getUserHotelId,
+		        removeHotel: removeHotel,
+		        getHotelCatalogId: getHotelCatalogId,
+		        getHotelsByCatalogId: getHotelsByCatalogId,
+		        removeUserHotel: removeUserHotel,
+		        getCatalogAssignedByHotelId: getCatalogAssignedByHotelId,
+		        getHotel: getHotel,
+		        updateHotel: updateHotel,
+		        assignCatalog: assignCatalog,
+		        saveActiveProduct: saveActiveProduct,
+		        getProductsActivated: getProductsActivated,
+		        getDeparmentsActivated: getDeparmentsActivated
 		};
 	}])
 	.factory('catalogService', ['$http', '$q', function ($http, $q) {
@@ -823,7 +864,7 @@ angular.module('ui.load', [])
 		};
 
 		var _login = function (loginData) {
-			
+
 			var data = "grant_type=password&username=" + loginData.username + "&password=" + loginData.password;
 
 //		   if (loginData.useRefreshTokens) {
@@ -840,13 +881,12 @@ angular.module('ui.load', [])
 				else {
 					localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.username, refreshToken: "", useRefreshTokens: false });
 				}
-
+			   
 				_authentication.isAuth = true;
 				_authentication.username = loginData.username;
 				_authentication.useRefreshTokens = loginData.useRefreshTokens;
-
+			    
 				deferred.resolve(response);
-
 			}).error(function (err, status) {
 				_logOut();
 				deferred.reject(err);

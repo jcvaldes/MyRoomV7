@@ -35,9 +35,10 @@ namespace MyRoom.Model
 
         [Column(TypeName = "text")]
         public string Description { get; set; }
-           
-  
+
+
         public int IdTranslationDescription { get; set; }
+        
 
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
@@ -78,6 +79,8 @@ namespace MyRoom.Model
 
         [Column("Orden")]
         public int? Order { get; set; }
+        [Column("IdDepartment")]
+        public int? IdDepartment { get; set; }
         [JsonIgnore]
         public virtual List<ActiveHotelProduct> ActiveHotelProduct { get; set; }
 

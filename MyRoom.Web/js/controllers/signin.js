@@ -2,7 +2,7 @@
 
 /* Controllers */
 // signin controller
-app.controller('SigninFormController', ['$scope', '$http', '$state', 'authService', 'ngAuthSettings', function ($scope, $http, $state, authService, ngAuthSettings) {
+app.controller('SigninFormController', ['$scope', '$http', '$state', 'authService', 'ngAuthSettings', 'currentUser', function ($scope, $http, $state, authService, ngAuthSettings, currentUser) {
     $scope.user = {
         username: "",
         password: "",
@@ -26,6 +26,11 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', 'authServic
     $scope.login = function () {
         $scope.authError = '';
         authService.login($scope.user).then(function (response) {
+            var rol = false;
+            if (response.rol == "True")
+                rol = true;
+
+            currentUser.setProfile(rol);
             $state.go('app.dashboard-v1');
         },
         function (err) {

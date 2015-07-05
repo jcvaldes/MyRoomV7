@@ -193,6 +193,80 @@
               }
           };
       })
+      app.directive('departmentSelect', function () {
+          return {
+              restrict: 'E',
+              templateUrl: 'tpl/partials/department-select.html',
+              controller: function ($scope, departmentService, $filter) {
+                  angular.element(document).ready(function () {
+                      $scope.clear = function () {
+                          $scope.department.selected = undefined;
+                      };
+
+                      $scope.department = {};
+
+                      $scope.selectActionDepartment = function () {
+                          //if ($scope.$parent.$state.$current.name === "app.page.department_create" || $scope.$parent.$state.$current.name == "app.page.department_edit") {
+                          //    $scope.$parent.department.HotelId = $scope.hotel.selected.Id;
+                          //}
+                          //if ($scope.$parent.$state.$current.name === "app.page.room_create" || $scope.$parent.$state.$current.name == "app.page.room_edit") {
+                          //    $scope.$parent.room.HotelId = $scope.hotel.selected.Id;
+                          //}
+                          if ($scope.$parent.$state.$current.name === "app.page.product_list") {
+                              departmentService.getProductssActivated($scope.department.selected.DepartmentId).then(function (response) {
+                                  $scope.products = response.data;
+                              });
+                          }
+
+                          //if ($scope.hotel.selected != undefined) {
+                          //    hotelService.getHotelCatalogId($scope.hotel.selected.Id).then(function (response) {
+                          //        if (response.data.length > 0)
+                          //            $scope.$parent.IdCatalog = response.data[0].IdCatalogue;
+
+                          //        if ($scope.$parent.$state.$current.name !== "app.page.product_list" && $scope.$parent.$state.$current.name !== "app.page.catalogue_assignProducts" && $scope.$parent.$state.$current.name !== "app.page.room_edit") {
+                          //            $scope.loadHotelTreeCatalog($scope.IdCatalog);
+                          //        }
+                          //    });
+                          //}
+                      }
+
+                      departmentService.getAll().then(function (response) {
+                          $scope.department = response.data;
+                          $scope.departments = [$scope.department.length]
+
+                          angular.forEach($scope.department, function (value, key) {
+                              $scope.departments[key] = { Id: value.DepartmentId, Name: value.Name };
+                              if ($scope.currentDepartmentId != 0 && $scope.currentDepartmentId == value.DepartmentId) {
+                                  $scope.department.selected = $scope.departments[key];
+                              }
+                          });
+
+                          //if ($scope.$parent.$state.$current.name == "app.page.product_list") {
+                          //    if ($scope.$parent.$state.params.hotel) {
+                          //        var idx = $filter('getHotelKeyById')($scope.hotels, $scope.$state.params.hotel)
+                          //        $scope.hotel.selected = $scope.hotels[idx];
+                          //    } else
+                          //        $scope.hotel.selected = $scope.hotels[0];
+
+                          //    hotelService.getProductsActivated($scope.hotel.selected.Id).then(function (response) {
+                          //        $scope.products = response.data;
+                          //    });
+                          //    if ($scope.hotel.selected != undefined) {
+                          //        hotelService.getHotelCatalogId($scope.hotel.selected.Id).then(function (response) {
+                          //            $scope.IdCatalog = response.data[0].IdCatalogue;
+                          //            if ($scope.$parent.$state.$current.name !== "app.page.product_list" && $scope.$parent.$state.$current.name !== "app.page.catalogue_assignProducts" && $scope.$parent.$state.$current.name !== "app.page.room_edit")
+                          //                $scope.$parent.loadHotelTreeCatalog($scope.IdCatalog);
+                          //        });
+                          //    }
+                          //}
+                      },
+                        function (err) {
+                            $scope.error_description = err.error_description;
+                        });
+                  });
+              }
+          };
+      })
       app.directive('hotelSelect', function () {
           return {
               restrict: 'E',
@@ -218,6 +292,9 @@
                           if ($scope.$parent.$state.$current.name === "app.page.product_list") {
                               hotelService.getProductsActivated($scope.hotel.selected.Id).then(function (response) {
                                   $scope.products = response.data;
+                              });
+                              hotelService.getDeparmentsActivated($scope.hotel.selected.Id).then(function (response) {
+                                  $scope.departments = response.data;
                               });
                           }
                       

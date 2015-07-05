@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using MyRoom.Data;
@@ -84,21 +85,32 @@ namespace MyRoom.API.Providers
             if (allowedOrigin == null) allowedOrigin = "*";
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
-
+            var IsAdmins = false;
+            List<IdentityUserRole> userRoles;
+            var rolName = "";
             using (AccountRepository _repo = new AccountRepository(new MyRoomDbContext()))
             {
                 IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
-
+                userRoles = user.Roles.ToList();
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new MyRoomDbContext()));
+                
+                foreach (var userRole in userRoles)
+                {
+                    var role = roleManager.FindById(userRole.RoleId);
+                    rolName = role.Name;
+                    if (role.Name == "Admins") IsAdmins = true;
+                }
                 if (user == null)
                 {
                     context.SetError("invalid_grant", "The user name or password is incorrect.");
                     return;
                 }
             }
-
+            
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
+            identity.AddClaim(new Claim(ClaimTypes.Role, rolName));
+            identity.AddClaim(new Claim("role", "user"));
             identity.AddClaim(new Claim("sub", context.UserName));
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
@@ -108,6 +120,9 @@ namespace MyRoom.API.Providers
                     },
                     { 
                         "userName", context.UserName
+                    },
+                    {
+                        "rol", IsAdmins.ToString()
                     }
                 });
 

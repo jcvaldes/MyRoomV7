@@ -307,6 +307,7 @@
     <Content Include="tpl\page_user_menuaccess.html" />
     <Content Include="tpl\partials\catalog-select.html" />
     <Content Include="tpl\partials\catalog-tree.html" />
+    <Content Include="tpl\partials\department-select.html" />
     <Content Include="tpl\partials\hotelcatalogfilter-select.html" />
     <Content Include="tpl\partials\room-form.html" />
     <Content Include="tpl\partials\department-form.html" />

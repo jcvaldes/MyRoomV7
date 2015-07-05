@@ -10,12 +10,20 @@
 
         <div class="row clearfix ">
 
-            <div class="col-md-4 m-b">
+            <div class="col-md-10 m-b">
                 <div class="input-group">
-                    <hotel-select></hotel-select>
-                    <span class="input-group-btn">
-                        <button class="btn m-b-xs btn-md btn-info btn-addon ng-pristine ng-valid ng-touched" ng-click="createProduct()">Create</button>
-                    </span>
+                    <div class="col-md-4 m-b">
+                        <hotel-select></hotel-select>
+                    </div>
+                    <div class="col-md-4 m-b">
+                        <department-select></department-select>
+
+                    </div>
+                    <div class="col-md-4 m-b">
+                        <span class="input-group-btn">
+                            <button class="btn m-b-xs btn-md btn-info btn-addon ng-pristine ng-valid ng-touched" ng-click="createProduct()">Create</button>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

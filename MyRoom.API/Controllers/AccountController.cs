@@ -80,6 +80,7 @@ namespace MyRoom.API.Controllers
 
 
         // POST api/Account/Register
+        [Authorize(Roles = "Admins")]
         [HttpPost]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
@@ -108,6 +109,7 @@ namespace MyRoom.API.Controllers
         }
 
          //PUT: api/account/1
+        [Authorize(Roles = "Admins")]
         [ResponseType(typeof(ApplicationUser))]
         public async Task<IHttpActionResult> Put([FromBody]EditProfileViewModel userVm)
         {
@@ -137,6 +139,7 @@ namespace MyRoom.API.Controllers
         }
 
         // Delete api/Account/1
+        [Authorize(Roles = "Admins")]
         [Route("{key}")]
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteAccount(int key)
@@ -159,13 +162,15 @@ namespace MyRoom.API.Controllers
                 throw ex;
             }
         }
-      
+
+        [Authorize(Roles = "Admins")]
         [Route("Users")]
         public IQueryable<ApplicationUser> GetUsers()
         {
             return _genericRepository.GetUsers();
         }
 
+        [Authorize(Roles = "Admins")]
         [Route("{key}")]
         [HttpGet]
         public IHttpActionResult GetAccount(int key)

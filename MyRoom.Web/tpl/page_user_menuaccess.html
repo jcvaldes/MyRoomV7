@@ -10,7 +10,7 @@
     <!-- toaster directive -->
     <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
     <!-- / toaster directive -->
-        <div class="modal fade" id="saveMenuAccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="saveMenuAccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-     <div class="row clearfix">
+    <div class="row clearfix">
         <div class="col-md-12 column">
             <div class="col-md-6 column">
                 <div class="panel panel-default shadow">
@@ -70,7 +70,9 @@
                                         <td>{{ item.MenuAccessId }}</td>
                                         <td>{{ item.MainMenuOption }}</td>
                                         <!--<td>{{menu.Active}}</td>-->
-                                        <td><label class="i-checks m-b-none"><input type="checkbox" ng-model="item.checked" ng-checked="item.checked"  name="post[]" value="{{ item.MenuAccessId }}"><i></i></label></td>
+                                        
+
+                                        <td><label class="i-checks m-b-none"><input type="checkbox" ng-model="item.checked" ng-checked="item.checked" name="post[]" value="{{ item.MenuAccessId }}"><i></i></label></td>
                                     </tr>
                                 </tbody>
                             </table>

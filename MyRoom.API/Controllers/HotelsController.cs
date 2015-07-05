@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
-using System.Web.Http.OData;
-using System.Web.Http.OData.Routing;
+using Microsoft.AspNet.Identity;
 using MyRoom.Model;
-using MyRoom.API.Filters;
-using System.Web.Http.OData.Query;
 using MyRoom.Data;
 using MyRoom.Data.Repositories;
-using MyRoom.Model.ViewModels;
 using MyRoom.ViewModels;
 using MyRoom.Data.Mappers;
 
@@ -30,12 +24,21 @@ namespace MyRoom.API.Controllers
     public class HotelsController : ApiController
     {
         HotelRepository hotelRepository = new HotelRepository(new MyRoomDbContext());
-
+        //MyRoomDbContext db = new MyRoomDbContext();
 
         // GET: odata/Hotels        
         public IHttpActionResult GetHotels()
         {
-            return Ok(hotelRepository.GetAll());
+            ClaimsPrincipal principal = HttpContext.Current.User as ClaimsPrincipal;
+            var claims = principal.Claims.ToList();
+            var rol = claims[1].Value;
+            if (rol == "Admins")
+            {
+                var a = HttpContext.Current.User.Identity.GetUserId();
+                return Ok(hotelRepository.GetHotelsByUser(HttpContext.Current.User.Identity.GetUserId()));
+                //return Ok(hotelRepository.GetAll());
+            }
+            return Ok(hotelRepository.GetHotelsByUser(HttpContext.Current.User.Identity.GetUserId()));
         }
 
         // GET: api/hotels/5

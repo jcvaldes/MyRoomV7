@@ -5,6 +5,9 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
     var uploader = $scope.uploader = new FileUploader({
         //url: ngWebBaseSettings.webServiceBase + 'api/files/Upload?var=5-0-0'
     });
+    var uploaderUrl = $scope.uploaderUrl = new FileUploader({
+        //url: ngWebBaseSettings.webServiceBase + 'api/files/Upload?var=1-0-0'
+    });
    // var ischecked = $filter('ischecked');
     $scope.IdCatalog = 0;
     $scope.toaster = {
@@ -21,7 +24,9 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
         Price: '0.00',
         Active: true,
         Image: '/img/no-image.jpg',
+        UrlScanDocument: '/img/no-image.jpg',
         Order: '0',
+        IdDepartment: 0,
         Translation: {
             Spanish: '',
             English: '',
@@ -50,6 +55,9 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
         $state.go('app.page.product_list');
     };
+    uploaderUrl.onSuccessItem = function (fileItem, response, status, headers) {
+        $state.go('app.page.product_list');
+    };
     uploader.onAfterAddingFile = function (fileItem) {
         if (fileItem.file.size > ngWebBaseSettings.fileSize) {
             $scope.toaster = {
@@ -66,6 +74,26 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
         var fr = new FileReader();
         fr.onload = function (e) {
             $('#imageProd')
+                .attr('src', e.target.result)
+        }
+        fr.readAsDataURL(fileItem._file);
+    };
+    uploaderUrl.onAfterAddingFile = function (fileItem) {
+        if (fileItem.file.size > ngWebBaseSettings.fileSize) {
+            $scope.toaster = {
+                type: 'error',
+                title: 'Info',
+                text: 'File too big'
+            };
+            $scope.pop();
+            return;
+        }
+        $scope.fileUrl = fileItem._file;
+        $scope.fileItemUrl = fileItem;
+        $scope.product.UrlScanDocument = $scope.fileUrl.name;
+        var fr = new FileReader();
+        fr.onload = function (e) {
+            $('#imageUrlScanDocument')
                 .attr('src', e.target.result)
         }
         fr.readAsDataURL(fileItem._file);
@@ -170,18 +198,39 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
             vm.Image = entity.Image;
             vm.CatalogId = $state.params.catalog;         
         }
+
+        if (entity.UrlScanDocument != "/img/no-image.jpg") {
+            vm.Pending = true;
+            if ($state.current.name == "app.page.product_edit") {
+                if (entity.UrlScanDocument.split('/').length > 1)
+                    vm.UrlScanDocument = entity.UrlScanDocument;
+                else
+                    vm.UrlScanDocument = "/images/" + $state.params.catalog + "/moreinfo/" + entity.UrlScanDocument;
+            }
+            else {
+                vm.UrlScanDocument = "/images/" + $state.params["catalog"] + "/moreinfo/" + entity.UrlScanDocument;
+            }
+            vm.CatalogId = $state.params.catalog;
+
+        }
+        else {
+            vm.Pending = false;
+            vm.UrlScanDocument = entity.UrlScanDocument;
+            vm.CatalogId = $state.params.catalog;
+        }
         vm.HotelId = $state.params.hotel;
         vm.Description = entity.Description;
         vm.Price = entity.Price;
         vm.ProductActive = entity.ProductActive;
         vm.Prefix = entity.Prefix;        
         vm.Order = entity.Order;
+        vm.IdDepartment = entity.IdDepartment,
         vm.Type = entity.Type;
-        vm.UrlScanDocument = entity.UrlScanDocument;
+        //vm.UrlScanDocument = entity.UrlScanDocument;
         vm.EmailMoreInfo = entity.EmailMoreInfo;
         vm.Standard = entity.Standard;
         vm.Premium = entity.Premium;
-        vm.Active = entity.Active
+        vm.Active = entity.Active;
         vm.Spanish = entity.Translation.Spanish;
         vm.English = entity.Translation.English;
         vm.French = entity.Translation.French;
@@ -226,12 +275,19 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
                     $scope.fileItem.url = ngWebBaseSettings.webServiceBase + 'api/files/Upload?var=5-' + $scope.IdCatalog + '-0';
                     uploader.uploadAll();
                 }
+                if ($scope.fileItemUrl !== undefined) {
+                    //Para subir la imagen
+                    debugger;
+                    $scope.fileItemUrl.url = ngWebBaseSettings.webServiceBase + 'api/files/Upload?var=6-' + $scope.IdCatalog + '-0';
+                        uploaderUrl.uploadAll();
+                }
                 $scope.product = {
-                    Active: true,
-                    Image: '/img/no-image.jpg',
-                    Translation: {
-                        Active: true
-                    },
+                Active: true,
+                Image: '/img/no-image.jpg',
+                UrlScanDocument: '/img/no-image.jpg',
+                Translation: {
+                    Active: true
+                },
                     RelatedProducts: []
                 };
                 $state.go('app.page.product_list', { 'hotel': $scope.$stateParams.hotel });
@@ -247,6 +303,7 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
         }
         else {
             $scope.product.Image = productVm.Image;
+            $scope.product.UrlScanDocument = productVm.UrlScanDocument;
             $scope.product.Pending = productVm.Pending;
             productService.updateProduct($scope.product).then(function (response) {
                 $scope.toaster = { type: 'success', title: 'Info', text: 'The Product has been updated' };
@@ -254,12 +311,18 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
                     $scope.fileItem.url = ngWebBaseSettings.webServiceBase + 'api/files/Upload?var=5-' + $scope.IdCatalog + '-0';
                     uploader.uploadAll();
                 }
+                if ($scope.fileItemUrl !== undefined) {
+                    //Para subir la imagen
+                    $scope.fileItemUrl.url = ngWebBaseSettings.webServiceBase + 'api/files/Upload?var=6-' + $scope.IdCatalog + '-0';
+                    uploaderUrl.uploadAll();
+                }
                 $timeout(function () {
                     $scope.pop();
                 }, 1000);
                 $scope.product = {
                     Active: true,
                     Image: 'no-image.jpg',
+                    UrlScanDocument: 'no-image.jpg',
                     Translation: {
                         Active: true
                     },

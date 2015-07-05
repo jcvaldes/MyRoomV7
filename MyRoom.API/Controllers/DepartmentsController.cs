@@ -33,6 +33,28 @@ namespace MyRoom.API.Controllers
             return Ok(departmentRepository.GetById  (key));
         }
 
+        [Route("hotels/{hotelId}")]
+        [HttpGet]
+        // GET: api/Departments/hotels/1
+        public IHttpActionResult GetDepartmentsByHotel(int hotelId)
+        {
+            List<Department> deparments = departmentRepository.GetDeparmentByHotelId(hotelId);
+
+            return Ok(deparments);
+
+        }
+
+        [Route("products/{deparmentId}")]
+        [HttpGet]
+        // GET: api/Departments/products/1
+        public IHttpActionResult GetProductsByDeparment(int deparmentId)
+        {
+            List<Product> products = departmentRepository.GetProductsByDeparmentlId(deparmentId);
+
+            return Ok(products);
+
+        }
+
         // PUT: api/department
         public async Task<IHttpActionResult> PutDepartments(Department department)
         {

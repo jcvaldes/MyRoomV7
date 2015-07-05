@@ -38,6 +38,18 @@ namespace MyRoom.Data.Repositories
             return json;
         }
 
+        public List<Department> GetDeparmentByHotelId(int hotelId)
+        {
+            var deparment = Context.Departments.Where(e => e.HotelId == hotelId).ToList();
+            return deparment;
+        }
+
+        public List<Product> GetProductsByDeparmentlId(int deparmentId)
+        {
+            var product = Context.Products.Where(e => e.IdDepartment == deparmentId).ToList();
+            return product;
+        }
+
         public override async System.Threading.Tasks.Task EditAsync(Department entity)
         {
             this.Context.Entry(entity).State = EntityState.Modified;

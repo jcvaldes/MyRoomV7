@@ -51,6 +51,10 @@ namespace MyRoom.Web.Controllers
                 case "5": //product
                     folderName = ConfigurationManager.AppSettings["UploadImagesCatalog"] + "//" + CatalogId + "//products";
                     break;
+                case "6": //product UrlScanDocument
+                    folderName = ConfigurationManager.AppSettings["UploadImagesCatalog"] + "//" + CatalogId + "//moreinfo";
+                    break;
+
             }
             string PATH = HttpContext.Current.Server.MapPath("~/" + folderName);
             string PATHModule = HttpContext.Current.Server.MapPath("~/" + folderNameMod);

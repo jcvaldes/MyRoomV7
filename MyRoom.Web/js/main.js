@@ -3,14 +3,17 @@
 /* Controllers */
 
 angular.module('app')
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 
-    function(              $scope,   $translate,   $localStorage,   $window ) {
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 'currentUser',
+    function(              $scope,   $translate,   $localStorage,   $window , currentUser) {
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
       isIE && angular.element($window.document.body).addClass('ie');
-      isSmartDevice( $window ) && angular.element($window.document.body).addClass('smart');
-
-      // config
+      isSmartDevice($window) && angular.element($window.document.body).addClass('smart');
+      
+      $scope.isAdmins = function () {
+          return currentUser.getProfile().isAdmins;
+      }
+        // config
       $scope.app = {
         name: 'Angulr',
         version: '2.0.0',

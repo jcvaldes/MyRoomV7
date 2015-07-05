@@ -30,6 +30,20 @@ namespace MyRoom.Data.Repositories
            return json;
         }
 
+        public List<Hotel> GetHotelsByUser(string idUser)
+        {
+            var userHotel = (from userhotel in Context.UserHotelPermissions select userhotel).ToList();
+            var hotelList = (from hotel in this.GetAll() select hotel).ToList();
+
+            var j = (from uh in hotelList
+                    join ht in userHotel
+                        on uh.HotelId equals ht.IdHotel
+                    where ht.IdUser == "266423e3-3aa3-4c80-9772-14ce51549ed1"
+                    select uh).ToList();
+
+            return j;
+        }
+
         public override async System.Threading.Tasks.Task EditAsync(Hotel entity)
         {
             this.Context.Entry(entity).State = EntityState.Modified;
