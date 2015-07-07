@@ -8,7 +8,8 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
     var uploaderUrl = $scope.uploaderUrl = new FileUploader({
         //url: ngWebBaseSettings.webServiceBase + 'api/files/Upload?var=1-0-0'
     });
-   // var ischecked = $filter('ischecked');
+    // var ischecked = $filter('ischecked');
+    $scope.IdDepartment = 0;
     $scope.IdCatalog = 0;
     $scope.toaster = {
         type: 'error',
@@ -259,6 +260,8 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
         $state.go('app.page.product_list', { 'hotel': $scope.$stateParams.hotel });
     }
     $scope.saveProduct = function () {
+        $scope.IdDepartment = $state.params['department'];
+        $scope.product.IdDepartment = $scope.IdDepartment;
         var productVm = createProductVM($scope.product);
         if ($state.current.name == "app.page.product_create" && $state.params['catalog']) {
             $scope.IdCatalog = $state.params['catalog'];
@@ -387,7 +390,8 @@ app.controller('ProductsListController', ['$scope', '$http', '$state', 'productS
                 $scope.pop();
                 return;
             }
-            var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog };
+
+            var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, department: $scope.department.selected.DepartmentId };
 
             $state.go('app.page.product_create', result);
         };
@@ -403,7 +407,7 @@ app.controller('ProductsListController', ['$scope', '$http', '$state', 'productS
                 return;
             }
             $scope.currentProdId = id;
-            var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, product: id };
+            var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, product: id, department: $scope.department.selected.DepartmentId };
 
             $state.go('app.page.product_edit', result);
 

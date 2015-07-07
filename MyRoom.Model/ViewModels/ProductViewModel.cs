@@ -31,6 +31,8 @@ namespace MyRoom.Model.ViewModels
 
         public int? Order { get; set; }
 
+        public int? IdDepartment { get; set; }
+
         public string SpanishDesc { get; set; }
 
         public string EnglishDesc { get; set; }

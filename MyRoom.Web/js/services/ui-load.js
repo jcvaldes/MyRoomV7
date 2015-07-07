@@ -101,7 +101,6 @@ angular.module('ui.load', [])
     	    //return deferred.promise;
     	};
     	function getProductssActivated(deparmentId) {
-	        debugger;
     	    var deferred = $q.defer();
     	    return $http.get(serviceBase + 'api/departments/products/' + deparmentId).success(function (response) {
     	        deferred.resolve(response);
@@ -310,7 +309,6 @@ angular.module('ui.load', [])
 		}
 
 		function getDeparmentsActivated(hotelId) {
-		    debugger;
 		    var deferred = $q.defer();
 		    return $http.get(serviceBase + 'api/Departments/hotels/' + hotelId).success(function (response) {
 		        deferred.resolve(response);

@@ -444,7 +444,7 @@ angular.module('app')
               .state('app.page.product_create', {
                   url: '/products/create',
                   templateUrl: 'tpl/page_product_create.html',
-                  params: {'hotel': null, 'catalog': null},
+                  params: {'hotel': null, 'catalog': null, 'department': null},
                   resolve: {
                       deps: ['$ocLazyLoad',
                         function ($ocLazyLoad) {
@@ -475,7 +475,7 @@ angular.module('app')
               .state('app.page.product_edit', {
                   url: '/products/edit/',
                   templateUrl: 'tpl/page_product_edit.html',
-                  params: { 'hotel': null, 'catalog': null, 'product': null },
+                  params: { 'hotel': null, 'catalog': null, 'product': null, 'department': null },
                   resolve: {
                       deps: ['$ocLazyLoad',
                         function ($ocLazyLoad) {

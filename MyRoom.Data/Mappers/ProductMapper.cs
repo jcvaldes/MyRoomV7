@@ -26,7 +26,8 @@ namespace MyRoom.Data.Mappers
                 EmailMoreInfo   = productViewModel.EmailMoreInfo,
                 Standard        = productViewModel.Standard,
                 Premium         = productViewModel.Premium,
-                Order           = productViewModel.Order              
+                Order           = productViewModel.Order,
+                IdDepartment    = productViewModel.IdDepartment 
             };
 
             product.Translation = new Translation()

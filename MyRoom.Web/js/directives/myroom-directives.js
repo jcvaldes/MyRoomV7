@@ -212,6 +212,7 @@
                           //if ($scope.$parent.$state.$current.name === "app.page.room_create" || $scope.$parent.$state.$current.name == "app.page.room_edit") {
                           //    $scope.$parent.room.HotelId = $scope.hotel.selected.Id;
                           //}
+                          $scope.IdDepartment = $scope.department.selected.DepartmentId;
                           if ($scope.$parent.$state.$current.name === "app.page.product_list") {
                               departmentService.getProductssActivated($scope.department.selected.DepartmentId).then(function (response) {
                                   $scope.products = response.data;
@@ -232,7 +233,7 @@
 
                       departmentService.getAll().then(function (response) {
                           $scope.department = response.data;
-                          $scope.departments = [$scope.department.length]
+                          $scope.departments = [$scope.department.length];
 
                           angular.forEach($scope.department, function (value, key) {
                               $scope.departments[key] = { Id: value.DepartmentId, Name: value.Name };
