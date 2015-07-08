@@ -38,7 +38,7 @@ namespace MyRoom.Data.Repositories
             var j = (from uh in hotelList
                     join ht in userHotel
                         on uh.HotelId equals ht.IdHotel
-                    where ht.IdUser == "266423e3-3aa3-4c80-9772-14ce51549ed1"
+                    where ht.IdUser == idUser
                     select uh).ToList();
 
             return j;
