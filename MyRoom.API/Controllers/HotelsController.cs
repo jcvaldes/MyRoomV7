@@ -24,21 +24,25 @@ namespace MyRoom.API.Controllers
     public class HotelsController : ApiController
     {
         HotelRepository hotelRepository = new HotelRepository(new MyRoomDbContext());
+        private AccountRepository _genericRepository = new AccountRepository(new MyRoomDbContext());
         //MyRoomDbContext db = new MyRoomDbContext();
 
         // GET: odata/Hotels        
         public IHttpActionResult GetHotels()
         {
             ClaimsPrincipal principal = HttpContext.Current.User as ClaimsPrincipal;
+            UserManager<ApplicationUser> manager = _genericRepository.Manager;
+            ApplicationUser user = manager.FindByName(HttpContext.Current.User.Identity.Name);
+            var Id = user.Id;
             var claims = principal.Claims.ToList();
             var rol = claims[1].Value;
             if (rol == "Admins")
             {
-                var a = HttpContext.Current.User.Identity.GetUserId();
-                return Ok(hotelRepository.GetHotelsByUser(HttpContext.Current.User.Identity.GetUserId()));
-                //return Ok(hotelRepository.GetAll());
+                //var a = HttpContext.Current.User.Identity.GetUserId();
+                //return Ok(hotelRepository.GetHotelsByUser(HttpContext.Current.User.Identity.GetUserId()));
+                return Ok(hotelRepository.GetAll());
             }
-            return Ok(hotelRepository.GetHotelsByUser(HttpContext.Current.User.Identity.GetUserId()));
+            return Ok(hotelRepository.GetHotelsByUser(Id));
         }
 
         // GET: api/hotels/5
@@ -105,6 +109,7 @@ namespace MyRoom.API.Controllers
         }
 
         // POST: api/hotels/
+        [Authorize(Roles = "Admins")]
         public async Task<IHttpActionResult> PostHotels(Hotel hotels)
         {
             if (!ModelState.IsValid)
@@ -181,6 +186,7 @@ namespace MyRoom.API.Controllers
         }
 
         // DELETE: api/hotels/5
+        [Authorize(Roles = "Admins")]
         [Route("{key}")]
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteHotels(int key)

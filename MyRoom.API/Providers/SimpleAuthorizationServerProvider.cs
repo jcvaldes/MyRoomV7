@@ -90,6 +90,7 @@ namespace MyRoom.API.Providers
             var rolName = "";
             using (AccountRepository _repo = new AccountRepository(new MyRoomDbContext()))
             {
+                
                 IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
                 userRoles = user.Roles.ToList();
                 var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new MyRoomDbContext()));
