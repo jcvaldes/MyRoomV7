@@ -183,9 +183,16 @@ namespace MyRoom.API.Controllers
         [HttpDelete]
         [HasCategoriesChildrenActionFilter]
         public async Task<IHttpActionResult> DeleteCategories(int key)
-        {         
-            await categoryRepo.DeleteAsync(key);
-            return Ok(HttpStatusCode.NoContent);
+        {
+            try
+            {
+                await categoryRepo.DeleteAsync(key);
+                return Ok(HttpStatusCode.NoContent);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected override void Dispose(bool disposing)

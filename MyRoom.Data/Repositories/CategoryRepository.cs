@@ -31,12 +31,13 @@ namespace MyRoom.Data.Repositories
         {
             this.Context.Entry(entity).State = EntityState.Modified;
             this.Context.Entry(entity.Translation).State = EntityState.Modified;
+            this.Context.Entry(entity.TranslationDescription).State = EntityState.Modified;
             await this.Context.SaveChangesAsync();
         }
 
         public List<Category> GetByParentId(int categoryId)
         {
-            return (from p in this.Context.Categories.Include("Translation").Include("CategoryProducts").Include("ActiveHotelCategory")
+            return (from p in this.Context.Categories.Include("Translation").Include("TranslationDescription").Include("CategoryProducts").Include("ActiveHotelCategory")
                     where p.IdParentCategory == categoryId
                     orderby p.IdParentCategory, p.Orden
                     select p).ToList<Category>();

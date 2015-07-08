@@ -22,6 +22,7 @@ namespace MyRoom.Model.ViewModels
         public int IdParentCategory { get; set; }
 
         public int IdTranslationName { get; set; }
+        public int IdTranslationDescription { get; set; }
 
         public bool IsFirst { get; set; }
         
@@ -47,6 +48,7 @@ namespace MyRoom.Model.ViewModels
         public string nextsibling { get; set; }
 
         public Translation Translation { get; set; }
+        public Translation TranslationDescription { get; set; }
     
         public List<ICatalogChildren> Children { get; set; }
 

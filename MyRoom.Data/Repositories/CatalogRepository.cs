@@ -27,6 +27,7 @@ namespace MyRoom.Data.Repositories
                                  .Include("Modules.ActiveHotelModule")
                                  .Include("Modules.Categories")
                                  .Include("Modules.Categories.Translation")
+                                 .Include("Modules.Categories.TranslationDescription")
                                  .Include("Modules.Categories.CategoryProducts")
                                  .Include("Modules.Categories.ActiveHotelCategory")
                                  .Include("Modules.RelUserModule")

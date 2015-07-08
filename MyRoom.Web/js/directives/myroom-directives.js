@@ -160,7 +160,6 @@
                 
                       if ($scope.dependends) {
                           $scope.selectActionHotel = function() {
-                              debugger 
                               hotelService.getProductsActivated($scope.hotel.selected.Id).then(function (response) {
                                 $scope.$parent.products = response.data;
                             });
@@ -363,7 +362,6 @@
                   $scope.loadHotelTreeCatalog = function (catalogId) {
                       $scope.items = {};
                       $scope.sourceItems = {};
-                      debugger
                       catalogService.getCatalogComplex(catalogId,true, true, true, $scope.hotel.selected.Id).then(function (response) {
                           $scope.catalogComplex = {};
                           $scope.catalogComplex.Modules = {};
@@ -442,9 +440,7 @@
                           }                          
                       }
                   };
-                  $scope.modifyItems = function (item, obj)
-                  {
-                      debugger
+                  $scope.modifyItems = function (item, obj) {
                       $scope.IsNew = false;
                       if (item.type == "module") {
                           //if (item.Image != 'no-image.jpg')
@@ -488,6 +484,7 @@
                           $scope.category = {
                               CategoryId: item.CategoryId,
                               IdTranslationName: item.IdTranslationName,
+                              IdTranslationDescription: item.IdTranslationDescription,
                               Prefix: item.Prefix,
                               Name: item.Name,
                               Image: item.Image,
@@ -509,6 +506,19 @@
                                   Language6: item.Translation.Language6,
                                   Language7: item.Translation.Language7,
                                   Language8: item.Translation.Language8,
+                                  Active: item.Translation.Active
+
+                              },
+                              TranslationDescription: {
+                                  Id: item.TranslationDescription.Id,
+                                  Spanish: item.TranslationDescription.Spanish,
+                                  English: item.TranslationDescription.English,
+                                  French: item.TranslationDescription.French,
+                                  German: item.TranslationDescription.German,
+                                  Language5: item.TranslationDescription.Language5,
+                                  Language6: item.TranslationDescription.Language6,
+                                  Language7: item.TranslationDescription.Language7,
+                                  Language8: item.TranslationDescription.Language8,
                                   Active: item.Translation.Active
 
                               }

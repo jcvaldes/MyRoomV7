@@ -34,6 +34,7 @@ namespace MyRoom.Model
                        
         [DefaultValue(1)]
         public int IdTranslationName { get; set; }
+        public int IdTranslationDescription { get; set; }
 
         public string Image { get; set; }
 
@@ -68,6 +69,7 @@ namespace MyRoom.Model
         public virtual List<ActiveHotelCategory> ActiveHotelCategory { get; set; }
 
         public virtual Translation Translation { get; set; }
+        public virtual Translation TranslationDescription { get; set; }
 
        
         public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }

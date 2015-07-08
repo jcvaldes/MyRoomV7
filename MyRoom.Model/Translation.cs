@@ -61,6 +61,9 @@ namespace MyRoom.Model
         public ICollection<Category> Categories { get; set; }
 
         [JsonIgnore]
+        public ICollection<Category> Categories1 { get; set; }
+
+        [JsonIgnore]
         public ICollection<Hotel> Hotels { get; set; }
          
         [JsonIgnore]

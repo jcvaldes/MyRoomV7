@@ -39,5 +39,23 @@ namespace MyRoom.Model.ViewModels
         public string ModuleName { get; set; }
 
         public int CatalogId { get; set; }
+
+        public string SpanishDesc { get; set; }
+
+        public string EnglishDesc { get; set; }
+
+        public string FrenchDesc { get; set; }
+
+        public string GermanDesc { get; set; }
+
+        public bool TranslationActiveDesc { get; set; }
+
+        public string LanguageDesc5 { get; set; }
+
+        public string LanguageDesc6 { get; set; }
+
+        public string LanguageDesc7 { get; set; }
+
+        public string LanguageDesc8 { get; set; }
     }
 }

@@ -84,6 +84,18 @@ app.controller('CataloguesController', ['$scope', '$http', '$state', 'catalogSer
             Language7: '',
             Language8: '',
             Active: true
+        },
+        TranslationDescription: {
+            Id: 0,
+            Spanish: '',
+            English: '',
+            French: '',
+            German: '',
+            Language5: '',
+            Language6: '',
+            Language7: '',
+            Language8: '',
+            Active: true
         }
     };
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
@@ -452,7 +464,6 @@ app.controller('CataloguesController', ['$scope', '$http', '$state', 'catalogSer
             //$scope.category.Modules = [$scope.module];
             category.Image = categoryViewModel.Image;
             category.Pending = categoryViewModel.Pending;
-
             catalogService.editCategory(category).then(function (response) {
                 $scope.toaster = {
                     type: 'success',
@@ -518,6 +529,18 @@ app.controller('CataloguesController', ['$scope', '$http', '$state', 'catalogSer
         vm.Language6 = entity.Translation.Language6;
         vm.Language7 = entity.Translation.Language7;
         vm.Language8 = entity.Translation.Language8;
+
+
+        vm.SpanishDesc = entity.TranslationDescription.Spanish;
+        vm.EnglishDesc = entity.TranslationDescription.English;
+        vm.FrenchDesc = entity.TranslationDescription.French;
+        vm.GermanDesc = entity.TranslationDescription.German;
+        vm.TranslationActiveDesc = entity.TranslationDescription.Active;
+        vm.LanguageDesc5 = entity.TranslationDescription.Language5;
+        vm.LanguageDesc6 = entity.TranslationDescription.Language6;
+        vm.LanguageDesc7 = entity.TranslationDescription.Language7;
+        vm.LanguageDesc8 = entity.TranslationDescription.Language8;
+
         if ($scope.IsNew) {
             vm.ModuleId = $scope.currentModule.ModuleId;
             vm.ModuleName = $scope.currentModule.Name;

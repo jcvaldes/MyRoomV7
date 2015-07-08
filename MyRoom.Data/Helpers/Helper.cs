@@ -68,6 +68,7 @@ namespace MyRoom.Helpers
                 type = "category",
                 IdParentCategory = category.IdParentCategory,
                 IdTranslationName = category.IdTranslationName,
+                IdTranslationDescription = category.IdTranslationDescription,
                 Image = category.Image,
                 IsFinal = category.IsFinal,
                 IsFirst = category.IsFirst,
@@ -77,7 +78,8 @@ namespace MyRoom.Helpers
                 Pending = category.Pending,
                 Active = category.Active,
                 nextsibling = "category",
-                Translation = category.Translation
+                Translation = category.Translation,
+                TranslationDescription =  category.TranslationDescription
             };
         
             return categoryCompositeViewModel;

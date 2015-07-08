@@ -37,6 +37,18 @@ namespace MyRoom.Data.Mappers
                 Language8 = categoryViewModel.Language8,
                 Active = categoryViewModel.TranslationActive,
             };
+            category.TranslationDescription = new Translation()
+            {
+                Spanish = categoryViewModel.SpanishDesc,
+                English = categoryViewModel.EnglishDesc,
+                French = categoryViewModel.FrenchDesc,
+                German = categoryViewModel.GermanDesc,
+                Language5 = categoryViewModel.LanguageDesc5,
+                Language6 = categoryViewModel.LanguageDesc6,
+                Language7 = categoryViewModel.LanguageDesc7,
+                Language8 = categoryViewModel.LanguageDesc8,
+                Active = categoryViewModel.TranslationActiveDesc,
+            };
             category.Modules = new List<Module>();
 
             category.Modules.Add(new Module()

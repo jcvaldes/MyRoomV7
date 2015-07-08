@@ -280,7 +280,6 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
                 }
                 if ($scope.fileItemUrl !== undefined) {
                     //Para subir la imagen
-                    debugger;
                     $scope.fileItemUrl.url = ngWebBaseSettings.webServiceBase + 'api/files/Upload?var=6-' + $scope.IdCatalog + '-0';
                         uploaderUrl.uploadAll();
                 }
@@ -407,7 +406,12 @@ app.controller('ProductsListController', ['$scope', '$http', '$state', 'productS
                 return;
             }
             $scope.currentProdId = id;
-            var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, product: id, department: $scope.department.selected.DepartmentId };
+
+            $scope.IdDepartment = 0;
+            if ($scope.department.selected !== undefined)
+                $scope.IdDepartment = $scope.department.selected.DepartmentId;
+                
+            var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, product: id, department: $scope.IdDepartment };
 
             $state.go('app.page.product_edit', result);
 
