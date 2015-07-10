@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 using MyRoom.Model;
 using MyRoom.Data;
 using MyRoom.Data.Repositories;
@@ -20,11 +23,21 @@ namespace MyRoom.API.Controllers
     public class CataloguesController : ApiController
     {
         CatalogRepository catalogRepository = new CatalogRepository(new MyRoomDbContext());
+        private AccountRepository _genericRepository = new AccountRepository(new MyRoomDbContext());
 
         // GET: api/Catalogues
         public IHttpActionResult GetCatalogues()
         {
-            return Ok(catalogRepository.GetAll());
+            ClaimsPrincipal principal = HttpContext.Current.User as ClaimsPrincipal;
+            UserManager<ApplicationUser> manager = _genericRepository.Manager;
+            ApplicationUser user = manager.FindByName(HttpContext.Current.User.Identity.Name);
+            var Id = user.Id;
+            var claims = principal.Claims.ToList();
+            var rol = claims[1].Value;
+            if (rol == "Admins")
+                return Ok(catalogRepository.GetAll());
+
+            return Ok(catalogRepository.GetCatalogByUser(Id));
         }
 
         [Route("{key}")]
@@ -48,6 +61,7 @@ namespace MyRoom.API.Controllers
         }
 
         // PUT: api/Catalogues
+        [Authorize(Roles = "Admins")]
         public async Task<IHttpActionResult> PutCatalogues(Catalog catalog)
         {
             if (!ModelState.IsValid)
@@ -78,6 +92,7 @@ namespace MyRoom.API.Controllers
         //}
 
         // POST: api/Catalogues
+        [Authorize(Roles = "Admins")]
         public  IHttpActionResult PostCatalogues(Catalog catalog)
         {
             if (!ModelState.IsValid)
@@ -106,6 +121,7 @@ namespace MyRoom.API.Controllers
         // POST: api/catalogues/user/1
         [Route("user")]
         [HttpPost]
+        [Authorize(Roles = "Admins")]
         public IHttpActionResult PostCataloguesUser(UserCatalogViewModel userCatalogVm)
         {
             if (!ModelState.IsValid)
@@ -173,6 +189,7 @@ namespace MyRoom.API.Controllers
             }
         }
         // DELETE: api/Catalogues/5
+        [Authorize(Roles = "Admins")]
         [Route("{key}")]
         [HttpDelete]
         [HasCatalogChildrenActionFilter]

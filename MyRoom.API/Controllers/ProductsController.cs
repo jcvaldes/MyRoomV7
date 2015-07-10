@@ -42,6 +42,7 @@ namespace MyRoom.API.Controllers
         //}
 
         // PUT: api/Products
+        [Authorize(Roles = "Admins")]
         public async Task<IHttpActionResult> PutProducts(Product product)
         {
             if (!ModelState.IsValid)
@@ -84,6 +85,7 @@ namespace MyRoom.API.Controllers
         }
 
         // POST: api/Products
+        [Authorize(Roles = "Admins")]
         public IHttpActionResult PostProducts(ProductViewModel productViewModel)
         {
             if (!ModelState.IsValid)
@@ -159,6 +161,7 @@ namespace MyRoom.API.Controllers
         //}
 
         // DELETE: api/Products/5
+        [Authorize(Roles = "Admins")]
         [Route("{key}")]
         [HttpDelete]
         [HasProductsOrderDetailActionFilter]

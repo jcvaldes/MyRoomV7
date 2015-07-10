@@ -52,6 +52,7 @@ namespace MyRoom.API.Controllers
         
         }
 
+        [Authorize(Roles = "Admins")]
         public async Task<IHttpActionResult> PutModules(Module module)
         {
             if (!ModelState.IsValid)
@@ -79,6 +80,7 @@ namespace MyRoom.API.Controllers
         }
 
         // POST: api/modules
+        [Authorize(Roles = "Admins")]
         public IHttpActionResult Post(ModuleViewModel moduleViewModel)
         {
             if (!ModelState.IsValid)
@@ -113,6 +115,7 @@ namespace MyRoom.API.Controllers
         }
         
         // DELETE: api/modules/5
+        [Authorize(Roles = "Admins")]
         [Route("{key}")]
         [HttpDelete]
         [HasModulesChildrenActionFilter]

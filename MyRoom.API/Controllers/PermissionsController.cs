@@ -41,6 +41,7 @@ namespace MyRoom.API.Controllers
 
         }
 
+        [Authorize(Roles = "Admins")]
         [HttpPost]
         public IHttpActionResult PostPermissions([FromBody]List<Permission> permissions)
         {
@@ -58,6 +59,7 @@ namespace MyRoom.API.Controllers
 
         }
 
+        [Authorize(Roles = "Admins")]
         [Route("userhotel")]
         [HttpPost]
         public IHttpActionResult PostUserHotelPermissions([FromBody]List<UserHotelPermission> permissions)

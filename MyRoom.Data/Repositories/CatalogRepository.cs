@@ -48,6 +48,19 @@ namespace MyRoom.Data.Repositories
         public MyRoomDbContext Context { get; private set; }
 
 
+        public List<Catalog> GetCatalogByUser(string idUser)
+        {
+            var userCatalog = (from usercatalog in Context.RelUserCatalogue select usercatalog);
+            var catalogList = (from cataloglist in this.GetAll() .Include("Translation") select cataloglist);
+
+            var j = (from uc in catalogList
+                     join ct in userCatalog
+                         on uc.CatalogId equals ct.IdCatalogue
+                     where ct.IdUser == idUser
+                     select uc);
+
+            return j.ToList();
+        }
 
         public string GetCatalogueById(int key)
         {

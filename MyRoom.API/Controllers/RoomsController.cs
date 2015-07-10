@@ -34,6 +34,7 @@ namespace MyRoom.API.Controllers
         }
 
         // PUT: api/rooms
+        [Authorize(Roles = "Admins")]
         public async Task<IHttpActionResult> PutRoom(Room room)
         {
             if (!ModelState.IsValid)
@@ -61,6 +62,7 @@ namespace MyRoom.API.Controllers
         }
 
         // POST: api/hotels/
+        [Authorize(Roles = "Admins")]
         public async Task<IHttpActionResult> PostRoom(Room room)
         {
             if (!ModelState.IsValid)
@@ -75,6 +77,7 @@ namespace MyRoom.API.Controllers
         
       
         // DELETE: api/rooms/5
+        [Authorize(Roles = "Admins")]
         [Route("{key}")]
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteRoom(int key)

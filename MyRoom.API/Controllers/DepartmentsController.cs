@@ -33,6 +33,7 @@ namespace MyRoom.API.Controllers
             return Ok(departmentRepository.GetById  (key));
         }
 
+
         [Route("hotels/{hotelId}")]
         [HttpGet]
         // GET: api/Departments/hotels/1
@@ -56,6 +57,7 @@ namespace MyRoom.API.Controllers
         }
 
         // PUT: api/department
+        [Authorize(Roles = "Admins")]
         public async Task<IHttpActionResult> PutDepartments(Department department)
         {
             if (!ModelState.IsValid)
@@ -83,6 +85,7 @@ namespace MyRoom.API.Controllers
         }
 
         // POST: api/hotels/
+        [Authorize(Roles = "Admins")]
         public async Task<IHttpActionResult> PostDepartment(Department department)
         {
             if (!ModelState.IsValid)
@@ -97,6 +100,7 @@ namespace MyRoom.API.Controllers
         
       
         // DELETE: api/department/5
+        [Authorize(Roles = "Admins")]
         [Route("{key}")]
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteDepartment(int key)

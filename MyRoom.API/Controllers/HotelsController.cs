@@ -82,6 +82,7 @@ namespace MyRoom.API.Controllers
 
 
         // PUT: api/Hotels
+        [Authorize(Roles = "Admins")]
         public async Task<IHttpActionResult> PutHotels(Hotel hotel)
         {
             if (!ModelState.IsValid)
@@ -123,6 +124,7 @@ namespace MyRoom.API.Controllers
         }
 
         // POST: api/hotels/catalogues
+        [Authorize(Roles = "Admins")]
         [Route("catalogues")]
         [HttpPost]
         public IHttpActionResult PostHotelsWithCatalogues(ActiveHotelCataloguesViewModel hotelsCataloguesViewModel)
@@ -143,6 +145,7 @@ namespace MyRoom.API.Controllers
 
 
         // POST: api/hotels/assignhotelelements
+        [Authorize(Roles = "Admins")]
         [Route("assignhotelelements")]
         [HttpPost]
         public IHttpActionResult PostAssignHotelElements(AssignHotelCatalogViewModel assignHotelCatalogViewModel)
