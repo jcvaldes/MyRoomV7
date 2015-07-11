@@ -28,12 +28,11 @@ namespace MyRoom.API.Controllers
         // GET: api/Catalogues
         public IHttpActionResult GetCatalogues()
         {
-            ClaimsPrincipal principal = HttpContext.Current.User as ClaimsPrincipal;
-            UserManager<ApplicationUser> manager = _genericRepository.Manager;
-            ApplicationUser user = manager.FindByName(HttpContext.Current.User.Identity.Name);
-            var Id = user.Id;
-            var claims = principal.Claims.ToList();
-            var rol = claims[1].Value;
+            UserInformation user1 = new UserInformation(new MyRoomDbContext());
+            user1.InformationUser(HttpContext.Current.User.Identity.Name);
+           var Id = user1.IdUser;
+           var rol = user1.Rol;
+
             if (rol == "Admins")
                 return Ok(catalogRepository.GetAll());
 
@@ -61,7 +60,7 @@ namespace MyRoom.API.Controllers
         }
 
         // PUT: api/Catalogues
-        [Authorize(Roles = "Admins")]
+        //[Authorize(Roles = "Admins")]
         public async Task<IHttpActionResult> PutCatalogues(Catalog catalog)
         {
             if (!ModelState.IsValid)
@@ -92,7 +91,7 @@ namespace MyRoom.API.Controllers
         //}
 
         // POST: api/Catalogues
-        [Authorize(Roles = "Admins")]
+        //[Authorize(Roles = "Admins")]
         public  IHttpActionResult PostCatalogues(Catalog catalog)
         {
             if (!ModelState.IsValid)
@@ -106,6 +105,18 @@ namespace MyRoom.API.Controllers
                 int catalogid = catalog.CatalogId;
                 if (catalog.Image!="/img/no-image.jpg")
                     catalog.Image = string.Format("{0}/{1}/{2}", ConfigurationManager.AppSettings["UploadImages"], catalogid , catalog.Image);
+
+                //Agregar el Catalog en Rel_User_Catalogue con los Id de user y catalog
+                UserInformation user1 = new UserInformation(new MyRoomDbContext());
+                user1.InformationUser(HttpContext.Current.User.Identity.Name);
+                var Id = user1.IdUser;
+                var rol = user1.Rol;
+                catalog.RelUserCatalogue.Add(new RelUserCatalogue()
+                {
+                    IdCatalogue = catalog.CatalogId,
+                    IdUser = Id
+                
+                });
                 catalogRepository.Edit(catalog);
                 //this.CreateStructureDirectories(catalogid);
                 return Ok(catalogid);
@@ -121,7 +132,7 @@ namespace MyRoom.API.Controllers
         // POST: api/catalogues/user/1
         [Route("user")]
         [HttpPost]
-        [Authorize(Roles = "Admins")]
+        //[Authorize(Roles = "Admins")]
         public IHttpActionResult PostCataloguesUser(UserCatalogViewModel userCatalogVm)
         {
             if (!ModelState.IsValid)
@@ -189,7 +200,7 @@ namespace MyRoom.API.Controllers
             }
         }
         // DELETE: api/Catalogues/5
-        [Authorize(Roles = "Admins")]
+       // [Authorize(Roles = "Admins")]
         [Route("{key}")]
         [HttpDelete]
         [HasCatalogChildrenActionFilter]

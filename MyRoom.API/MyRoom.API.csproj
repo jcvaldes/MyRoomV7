@@ -199,6 +199,7 @@
     <Compile Include="Infraestructure\CatalogCreator.cs" />
     <Compile Include="Infraestructure\CustomMultipartFormDataStreamProvider.cs" />
     <Compile Include="Infraestructure\FileDesc.cs" />
+    <Compile Include="Infraestructure\UserInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />

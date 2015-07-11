@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using Microsoft.AspNet.Identity;
+using MyRoom.API.Infraestructure;
 using MyRoom.Model;
 using MyRoom.Data;
 using MyRoom.Data.Repositories;
@@ -24,18 +25,16 @@ namespace MyRoom.API.Controllers
     public class HotelsController : ApiController
     {
         HotelRepository hotelRepository = new HotelRepository(new MyRoomDbContext());
-        private AccountRepository _genericRepository = new AccountRepository(new MyRoomDbContext());
+        //private AccountRepository _genericRepository = new AccountRepository(new MyRoomDbContext());
         //MyRoomDbContext db = new MyRoomDbContext();
 
         // GET: odata/Hotels        
         public IHttpActionResult GetHotels()
         {
-            ClaimsPrincipal principal = HttpContext.Current.User as ClaimsPrincipal;
-            UserManager<ApplicationUser> manager = _genericRepository.Manager;
-            ApplicationUser user = manager.FindByName(HttpContext.Current.User.Identity.Name);
-            var Id = user.Id;
-            var claims = principal.Claims.ToList();
-            var rol = claims[1].Value;
+            UserInformation user1 = new UserInformation(new MyRoomDbContext());
+            user1.InformationUser(HttpContext.Current.User.Identity.Name);
+            var Id = user1.IdUser;
+            var rol = user1.Rol;
             if (rol == "Admins")
             {
                 //var a = HttpContext.Current.User.Identity.GetUserId();
@@ -124,7 +123,7 @@ namespace MyRoom.API.Controllers
         }
 
         // POST: api/hotels/catalogues
-        [Authorize(Roles = "Admins")]
+        //[Authorize(Roles = "Admins")]
         [Route("catalogues")]
         [HttpPost]
         public IHttpActionResult PostHotelsWithCatalogues(ActiveHotelCataloguesViewModel hotelsCataloguesViewModel)
