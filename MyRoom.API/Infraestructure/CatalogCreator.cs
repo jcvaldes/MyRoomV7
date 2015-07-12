@@ -129,7 +129,7 @@ namespace MyRoom.API.Infraestructure
                     {
                         p.ActiveHotelCategory.ForEach(delegate(ActiveHotelCategory hotelCategory)
                         {
-                            if (hotelCategory.IdHotel == hotelId && hotelCategory.IdCategory == p.CategoryId)
+                            if (hotelCategory.IdHotel == hotelId && hotelCategory.IdCategory == p.CategoryId && hotelCategory.Active)
                             {
                                 category.IsChecked = true;
                             }
@@ -204,7 +204,7 @@ namespace MyRoom.API.Infraestructure
                     //   categoryCompositeViewModel.IsChecked = c.ActiveHotelCategory.Contains(new ActiveHotelCategory() { IdCategory = c.CategoryId, IdHotel = hotelId, Active = true, Category = c});
                     c.ActiveHotelCategory.ForEach(delegate(ActiveHotelCategory hotelCategory)
                     {
-                        if (hotelCategory.IdHotel == hotelId && hotelCategory.Category.IdParentCategory == p.CategoryId)
+                        if (hotelCategory.IdHotel == hotelId && hotelCategory.Category.IdParentCategory == p.CategoryId && hotelCategory.Active)
                         {
                             categoryCompositeViewModel.IsChecked = true;
                         }

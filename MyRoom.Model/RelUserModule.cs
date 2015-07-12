@@ -5,6 +5,7 @@ namespace MyRoom.Model
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Newtonsoft.Json;
 
     [Table("REL_USER_MODULE")]
     public partial class RelUserModule
@@ -20,7 +21,8 @@ namespace MyRoom.Model
         public bool? ReadWrite { get; set; }
 
         public virtual ApplicationUser User { get; set; }
-
+        
+        [JsonIgnore]
         public virtual Module Module { get; set; }
     }
 }
