@@ -12,6 +12,11 @@
                   
                   $scope.selectActionUser = function (id) {
                       $scope.IdUser = id;
+                      if ($state.current.name == 'app.page.usercatalog') {
+                          $scope.cata.selected = undefined;
+                          $scope.items = {};
+                          $scope.sourceItems = {};
+                      }
                       if ($state.current.name == 'app.page.userhotel') {
                           for (i = 0; i < $scope.hotels.length; i++)
                               $scope.hotels[i].checked = false;
@@ -108,7 +113,9 @@
                       if ($scope.onCatalogChange)
                           $scope.onCatalogChange(cata.id);
 
-
+                      //if ($scope.$parent.$state.$current.name === "app.page.product_list") {
+                      //    $scope.department.selected = undefined;
+                      //}
                       if ($state.current.name === 'app.page.usercatalog') {
                           $scope.activeCheckbox = true;
                       }

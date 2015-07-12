@@ -71,17 +71,21 @@ angular.module('ui.load', [])
             updateRoom: updateRoom
         };
     }])
-    .factory('currentUser', ['$http', '$q', function ($http, $q) {
+    .factory('currentUser', ['$http', '$q', 'localStorageService', function ($http, $q, localStorageService) {
         var profile = {
             isAdmins: false
         };
         function currentUser() {
 
         }
-        var setProfile = function(isAdmins) {
-            profile.isAdmins = isAdmins;
+        var setProfile = function (isAdmins) {
+            localStorageService.set('Rol', { 'IsAdmin': isAdmins });
+            //var a = localStorageService.get('Rol');
+            //profile.isAdmins = a.IsAdmin;
         };
         var getProfile = function () {
+            var a = localStorageService.get('Rol');
+            profile = a.IsAdmin;
             return profile;
         };
         return {
@@ -319,6 +323,7 @@ angular.module('ui.load', [])
         }
 
 		function saveActiveProduct(assignhotelelements) {
+		    debugger;
 		    var deferred = $q.defer();
 		    return $http.post(serviceBase + 'api/hotels/assignhotelelements', assignhotelelements).success(function (response) {
 		        deferred.resolve(response);
