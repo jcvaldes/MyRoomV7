@@ -47,5 +47,11 @@ namespace MyRoom.Data.Repositories
             }
         }
 
+        public List<RelUserCategory> GetByUserAndCategory(string userId, int categoryId)
+        {
+            List<RelUserCategory> userCategories = this.Context.RelUserCategory.Where(c => c.IdUser == userId && c.IdCategory == categoryId).ToList();
+            return userCategories;
+        }
+
     }
 }

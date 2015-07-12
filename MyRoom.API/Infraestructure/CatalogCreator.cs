@@ -201,15 +201,30 @@ namespace MyRoom.API.Infraestructure
 
                 if (activecategory)
                 {
-                    //   categoryCompositeViewModel.IsChecked = c.ActiveHotelCategory.Contains(new ActiveHotelCategory() { IdCategory = c.CategoryId, IdHotel = hotelId, Active = true, Category = c});
-                    c.ActiveHotelCategory.ForEach(delegate(ActiveHotelCategory hotelCategory)
+                    if (withproducts)
                     {
-                        if (hotelCategory.IdHotel == hotelId && hotelCategory.Category.IdParentCategory == p.CategoryId && hotelCategory.Active)
+                        //   categoryCompositeViewModel.IsChecked = c.ActiveHotelCategory.Contains(new ActiveHotelCategory() { IdCategory = c.CategoryId, IdHotel = hotelId, Active = true, Category = c});
+                        c.ActiveHotelCategory.ForEach(delegate(ActiveHotelCategory hotelCategory)
                         {
-                            categoryCompositeViewModel.IsChecked = true;
-                        }
-                    });
+                            if (hotelCategory.IdHotel == hotelId && hotelCategory.Category.IdParentCategory == p.CategoryId && hotelCategory.Active)
+                            {
+                                categoryCompositeViewModel.IsChecked = true;
+                            }
+                        });
+                    }
+                    else
+                    {
+                        UserCategoryRepository userCategoryRepo = new UserCategoryRepository(this.Context);
+                        c.RelUserCategory = userCategoryRepo.GetByUserAndCategory("266423e3-3aa3-4c80-9772-14ce51549ed1", c.CategoryId);
+                        c.RelUserCategory.ForEach(delegate(RelUserCategory userCategory)
+                        {
+                            if (userCategory.IdCategory == c.CategoryId && true == true) //userCategory.IdUser == 
+                            {
+                                categoryCompositeViewModel.IsChecked = true;
+                            }
+                        });
 
+                    }
                     categoryCompositeViewModel.ActiveCheckbox = true;
                 }
 
