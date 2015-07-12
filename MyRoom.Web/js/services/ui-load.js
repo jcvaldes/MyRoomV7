@@ -72,6 +72,7 @@ angular.module('ui.load', [])
         };
     }])
     .factory('currentUser', ['$http', '$q', 'localStorageService', function ($http, $q, localStorageService) {
+        //
         var profile = {
             isAdmins: false
         };
@@ -79,14 +80,12 @@ angular.module('ui.load', [])
 
         }
         var setProfile = function (isAdmins) {
-            localStorageService.set('Rol', { 'IsAdmin': isAdmins });
-            //var a = localStorageService.get('Rol');
-            //profile.isAdmins = a.IsAdmin;
+            localStorageService.set('Rol', { 'IsAdmin': isAdmins });//
         };
         var getProfile = function () {
-            var a = localStorageService.get('Rol');
-            profile = a.IsAdmin;
-            return profile;
+            var a = localStorageService.get('Rol');//
+            profile = a.IsAdmin;//
+            return profile;//
         };
         return {
             setProfile: setProfile,

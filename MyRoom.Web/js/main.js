@@ -11,7 +11,7 @@ angular.module('app')
       isSmartDevice($window) && angular.element($window.document.body).addClass('smart');
       
       $scope.isAdmins = function () {
-          return currentUser.getProfile();
+          return currentUser.getProfile();////
       }
         // config
       $scope.app = {

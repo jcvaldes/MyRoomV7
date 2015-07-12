@@ -1,4 +1,5 @@
-﻿using MyRoom.Data;
+﻿using System.Web;
+using MyRoom.Data;
 using MyRoom.Data.Repositories;
 using MyRoom.Helpers;
 using MyRoom.Model;
@@ -214,11 +215,14 @@ namespace MyRoom.API.Infraestructure
                     }
                     else
                     {
+                        UserInformation user1 = new UserInformation(this.Context);
+                        user1.InformationUser(HttpContext.Current.User.Identity.Name);
+                        var idUser = user1.IdUser;
                         UserCategoryRepository userCategoryRepo = new UserCategoryRepository(this.Context);
-                        c.RelUserCategory = userCategoryRepo.GetByUserAndCategory("266423e3-3aa3-4c80-9772-14ce51549ed1", c.CategoryId);
+                        c.RelUserCategory = userCategoryRepo.GetByUserAndCategory(idUser, c.CategoryId);
                         c.RelUserCategory.ForEach(delegate(RelUserCategory userCategory)
                         {
-                            if (userCategory.IdCategory == c.CategoryId && true == true) //userCategory.IdUser == 
+                            if (userCategory.IdCategory == c.CategoryId && userCategory.IdUser == idUser) //userCategory.IdUser == 
                             {
                                 categoryCompositeViewModel.IsChecked = true;
                             }

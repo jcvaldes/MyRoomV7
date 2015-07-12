@@ -11,6 +11,7 @@
                   };
                   
                   $scope.selectActionUser = function (id) {
+                      //
                       $scope.IdUser = id;
                       if ($state.current.name == 'app.page.usercatalog') {
                           $scope.cata.selected = undefined;
