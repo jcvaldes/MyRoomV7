@@ -19,7 +19,7 @@ namespace MyRoom.Model
             ActiveHotelCategory = new List<ActiveHotelCategory>();
             //RelCategoryProduct = new HashSet<RelCategoryProduct>();
             //RelModuleCategory = new HashSet<RelModuleCategory>();
-            RelUserCategory = new HashSet<RelUserCategory>();
+            RelUserCategory = new List<RelUserCategory>();
             //CategoryChild = new Category();
             CategoryProducts = new HashSet<CategoryProduct>();
         }
@@ -76,7 +76,7 @@ namespace MyRoom.Model
 
         //public virtual ICollection<RelModuleCategory> RelModuleCategory { get; set; }
         [JsonIgnore]
-        public virtual ICollection<RelUserCategory> RelUserCategory { get; set; }
+        public virtual List<RelUserCategory> RelUserCategory { get; set; }
 
         [NotMapped]
         public List<CategoryCompositeViewModel> Children { get; set; }
