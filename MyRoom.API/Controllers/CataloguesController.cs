@@ -107,16 +107,16 @@ namespace MyRoom.API.Controllers
                     catalog.Image = string.Format("{0}/{1}/{2}", ConfigurationManager.AppSettings["UploadImages"], catalogid , catalog.Image);
 
                 //Agregar el Catalog en Rel_User_Catalogue con los Id de user y catalog
-                UserInformation user1 = new UserInformation(new MyRoomDbContext());
-                user1.InformationUser(HttpContext.Current.User.Identity.Name);
-                var Id = user1.IdUser;
-                var rol = user1.Rol;
-                catalog.RelUserCatalogue.Add(new RelUserCatalogue()
-                {
-                    IdCatalogue = catalog.CatalogId,
-                    IdUser = Id
+                //UserInformation user1 = new UserInformation(new MyRoomDbContext());
+                //user1.InformationUser(HttpContext.Current.User.Identity.Name);
+                //var Id = user1.IdUser;
+                //var rol = user1.Rol;
+                //catalog.RelUserCatalogue.Add(new RelUserCatalogue()
+                //{
+                //    IdCatalogue = catalog.CatalogId,
+                //    IdUser = Id
                 
-                });
+                //});
                 catalogRepository.Edit(catalog);
                 //this.CreateStructureDirectories(catalogid);
                 return Ok(catalogid);
@@ -142,6 +142,7 @@ namespace MyRoom.API.Controllers
 
             try
             {
+
                 UserCatalogRepository relUserCatalogRepo = new UserCatalogRepository(new MyRoomDbContext());
                 RelUserCatalogue relUserCatalog  = UserCatalogMapper.CreateModel(userCatalogVm);
                 relUserCatalogRepo.InsertUserCatalog(userCatalogVm, true);

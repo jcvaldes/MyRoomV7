@@ -279,8 +279,11 @@
                      
                       $scope.hotel = {};
 
-                      $scope.selectActionHotel = function ()
-                      {
+                      $scope.selectActionHotel = function () {
+                          if ($scope.$parent.$state.$current.name === "app.page.product_list") {
+                              $scope.department.selected = undefined;
+                          }
+                          
                           if ($scope.$parent.$state.$current.name === "app.page.department_create" || $scope.$parent.$state.$current.name == "app.page.department_edit")
                           {
                               $scope.$parent.department.HotelId = $scope.hotel.selected.Id;

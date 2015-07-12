@@ -27,6 +27,18 @@ namespace MyRoom.API.Infraestructure
             {
                 ModuleCompositeViewModel moduleVm = Helper.ConvertModuleToViewModel(m, activemod);
                 modules.Add(moduleVm);
+                if (m.ActiveHotelModule.Count > 0)
+                {
+                    foreach (ActiveHotelModule ahm in m.ActiveHotelModule)
+                    {
+                        if (m.ModuleId == ahm.IdModule)
+                        {
+                            moduleVm.IsChecked = true;
+                            moduleVm.ActiveCheckbox = true;
+                        }
+
+                    }
+                }
                 //if (!string.IsNullOrEmpty(userId))
                 //{
                 //    if (activemod)
@@ -46,8 +58,19 @@ namespace MyRoom.API.Infraestructure
                     CategoryCompositeViewModel category = Helper.ConvertCategoryToViewModel(p);
                     if (activecategory)
                     {
-
-                        category.IsChecked = p.ActiveHotelCategory.Contains(new ActiveHotelCategory() { IdCategory = p.CategoryId, IdHotel = hotelId, Active = true });
+                        //
+                        if (p.ActiveHotelCategory.Count > 0)
+                        {
+                            foreach (ActiveHotelCategory ahc in p.ActiveHotelCategory)
+                            {
+                                if (p.CategoryId == ahc.IdCategory)
+                                {
+                                    hotelId = ahc.IdHotel;
+                                    category.IsChecked = true;
+                                        //p.ActiveHotelCategory.Contains(new ActiveHotelCategory() { IdCategory = p.CategoryId, IdHotel = hotelId, Active = true });
+                                }
+                            }
+                        } else category.IsChecked = p.ActiveHotelCategory.Contains(new ActiveHotelCategory() { IdCategory = p.CategoryId, IdHotel = hotelId, Active = true });
                         category.ActiveCheckbox = true;
                     }
                     moduleVm.Children.Add(category);
