@@ -75,7 +75,7 @@ namespace MyRoom.API.Infraestructure
                         category.ActiveCheckbox = true;
                     }
                     moduleVm.Children.Add(category);
-                    CreateSubCategories(category, false, activecategory, hotelId);
+                    CreateSubCategories(category, false, activecategory, hotelId, userId);
 
                 }
 
@@ -160,7 +160,7 @@ namespace MyRoom.API.Infraestructure
                     }
 
                     moduleVm.Children.Add(category);
-                    CreateSubCategories(category, true, activecategory, hotelId);
+                    CreateSubCategories(category, true, activecategory, hotelId, "");
                 }
 
             }
@@ -187,7 +187,7 @@ namespace MyRoom.API.Infraestructure
 
         }
 
-        private List<CategoryCompositeViewModel> CreateSubCategories(CategoryCompositeViewModel p, bool withproducts, bool activecategory, int hotelId)
+        private List<CategoryCompositeViewModel> CreateSubCategories(CategoryCompositeViewModel p, bool withproducts, bool activecategory, int hotelId, string userId)
         {
             CategoryRepository categoryRepo = new CategoryRepository(this.Context);
 
@@ -205,7 +205,7 @@ namespace MyRoom.API.Infraestructure
                     if (withproducts)
                     {
                         //   categoryCompositeViewModel.IsChecked = c.ActiveHotelCategory.Contains(new ActiveHotelCategory() { IdCategory = c.CategoryId, IdHotel = hotelId, Active = true, Category = c});
-                        c.ActiveHotelCategory.ForEach(delegate(ActiveHotelCategory hotelCategory)
+                        c.ActiveHotelCategory.ForEach(delegate(ActiveHotelCategory hotelCategory) 
                         {
                             if (hotelCategory.IdHotel == hotelId && hotelCategory.Category.IdParentCategory == p.CategoryId && hotelCategory.Active)
                             {
@@ -215,14 +215,11 @@ namespace MyRoom.API.Infraestructure
                     }
                     else
                     {
-                        UserInformation user1 = new UserInformation(this.Context);
-                        user1.InformationUser(HttpContext.Current.User.Identity.Name);
-                        var idUser = user1.IdUser;
                         UserCategoryRepository userCategoryRepo = new UserCategoryRepository(this.Context);
-                        c.RelUserCategory = userCategoryRepo.GetByUserAndCategory(idUser, c.CategoryId);
+                        c.RelUserCategory = userCategoryRepo.GetByUserAndCategory(userId, c.CategoryId); 
                         c.RelUserCategory.ForEach(delegate(RelUserCategory userCategory)
                         {
-                            if (userCategory.IdCategory == c.CategoryId && userCategory.IdUser == idUser) //userCategory.IdUser == 
+                            if (userCategory.IdCategory == c.CategoryId && userCategory.IdUser == userId) //userCategory.IdUser == 
                             {
                                 categoryCompositeViewModel.IsChecked = true;
                             }
@@ -261,7 +258,7 @@ namespace MyRoom.API.Infraestructure
 
                 p.Children.Add(categoryCompositeViewModel);
                 if (categories != null)
-                    CreateSubCategories(categoryCompositeViewModel, withproducts, activecategory, hotelId);
+                    CreateSubCategories(categoryCompositeViewModel, withproducts, activecategory, hotelId, userId);
 
             }
 

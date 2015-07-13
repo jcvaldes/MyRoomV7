@@ -322,7 +322,6 @@ angular.module('ui.load', [])
         }
 
 		function saveActiveProduct(assignhotelelements) {
-		    debugger;
 		    var deferred = $q.defer();
 		    return $http.post(serviceBase + 'api/hotels/assignhotelelements', assignhotelelements).success(function (response) {
 		        deferred.resolve(response);
