@@ -2,10 +2,12 @@
 
 /* Controllers */
 // Catalogues controller
-app.controller('CataloguesController', ['$scope', '$http', '$state', 'catalogService', 'toaster', 'ngWebBaseSettings', 'FileUploader', function ($scope, $http, $state, catalogService, toaster, ngWebBaseSettings, FileUploader) {
+app.controller('CataloguesController', ['$scope', '$http', '$state', 'catalogService', 'toaster', 'ngWebBaseSettings', 'FileUploader', 'currentUser', function ($scope, $http, $state, catalogService, toaster, ngWebBaseSettings, FileUploader, currentUser) {
     var uploader = $scope.uploader = new FileUploader({
         //url: ngWebBaseSettings.webServiceBase + 'api/files/Upload?var=1-0-0'
     });
+    if (!currentUser.getOpcion1())
+        $state.go('app.dashboard-v1');
     //$scope.rootFile = '/img/';
     //$scope.rootFileModule = '/img/';
     //$scope.rootFileCategory = '/img/';

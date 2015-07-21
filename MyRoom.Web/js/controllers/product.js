@@ -349,7 +349,7 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
 
 //    $scope.getAllProduct();
 }]);
-app.controller('ProductsListController', ['$scope', '$http', '$state', 'productService', '$injector', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'toaster', '$timeout', function ($scope, $http, $state, productService, $injector, DTOptionsBuilder, DTColumnDefBuilder, toaster, $timeout) {
+app.controller('ProductsListController', ['$scope', '$http', '$state', 'productService', '$injector', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'toaster', '$timeout', 'currentUser', function ($scope, $http, $state, productService, $injector, DTOptionsBuilder, DTColumnDefBuilder, toaster, $timeout, currentUser) {
     $scope.products = {};
     $scope.currentProdId = 0;
     $scope.IdCatalog = 0;
@@ -392,7 +392,8 @@ app.controller('ProductsListController', ['$scope', '$http', '$state', 'productS
 
             var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, department: $scope.department.selected.DepartmentId };
 
-            $state.go('app.page.product_create', result);
+            if (!currentUser.getOpcion2())
+                $state.go('app.page.product_create', result);
         };
 
         $scope.modifyProduct = function (id) {

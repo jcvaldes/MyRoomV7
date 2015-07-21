@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using MyRoom.API.Infraestructure;
 using MyRoom.Data;
 using MyRoom.Data.Repositories;
 using MyRoom.Helpers;
@@ -88,10 +89,12 @@ namespace MyRoom.API.Providers
             var IsAdmins = false;
             List<IdentityUserRole> userRoles;
             var rolName = "";
+            var idUser = "";
             using (AccountRepository _repo = new AccountRepository(new MyRoomDbContext()))
             {
                 
                 IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
+                idUser = user.Id;
                 userRoles = user.Roles.ToList();
                 var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new MyRoomDbContext()));
                 
@@ -107,7 +110,42 @@ namespace MyRoom.API.Providers
                     return;
                 }
             }
-            
+            //Buscar las respectivas opciones del usuario para setear las 7 variables de los acceso y enviarlo por el Claim
+            PermissionRepository prRepository = new PermissionRepository(new MyRoomDbContext());
+            var permisions = prRepository.GetById(idUser).ToList();
+            string opcion1 = "",
+                opcion2 = "",
+                opcion3 = "",
+                opcion4 = "",
+                opcion5 = "",
+                opcion6 = "";
+            foreach (var um in permisions)
+            {
+                if (um.IdPermission.ToString() == "1")
+                {
+                    opcion1 = "1";
+                }
+                if (um.IdPermission.ToString() == "2")
+                {
+                    opcion2 = "2";
+                }
+                if (um.IdPermission.ToString() == "3")
+                {
+                    opcion3 = "3";
+                }
+                if (um.IdPermission.ToString() == "4")
+                {
+                    opcion4 = "4";
+                }
+                if (um.IdPermission.ToString() == "5")
+                {
+                    opcion5 = "5";
+                }
+                if (um.IdPermission.ToString() == "6")
+                {
+                    opcion6 = "6";
+                }
+            }
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
             identity.AddClaim(new Claim(ClaimTypes.Role, rolName));
@@ -124,6 +162,24 @@ namespace MyRoom.API.Providers
                     },
                     {
                         "rol", IsAdmins.ToString()
+                    },
+                    {
+                        "opcion1", opcion1
+                    },
+                    {
+                        "opcion2", opcion2
+                    },
+                    {
+                        "opcion3", opcion3
+                    },
+                    {
+                        "opcion4", opcion4
+                    },
+                    {
+                        "opcion5", opcion5
+                    },
+                    {
+                        "opcion6", opcion6
                     }
                 });
 

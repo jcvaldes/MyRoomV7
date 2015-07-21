@@ -13,6 +13,25 @@ angular.module('app')
       $scope.isAdmins = function () {
           return currentUser.getProfile();////
       }
+      $scope.menuAccesCatalogueStructure = function () {
+          return currentUser.getOpcion1();
+      }
+      $scope.menuAccesProducts = function () {
+          return currentUser.getOpcion2();;
+      }
+      $scope.menuAccesAssignProductsCatalogues = function () {
+          return currentUser.getOpcion3();;
+      }
+      $scope.menuAccesAssignCataloguesHotels = function () {
+          return currentUser.getOpcion4();;
+      }
+      $scope.menuAccesActivateProductsHotel = function () {
+          return currentUser.getOpcion5();;
+      }
+      $scope.menuAccesBackendUserManagement = function () {
+          return currentUser.getOpcion6();;
+      }
+
         // config
       $scope.app = {
         name: 'Angulr',

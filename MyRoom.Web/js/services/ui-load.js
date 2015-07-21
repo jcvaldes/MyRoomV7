@@ -76,20 +76,96 @@ angular.module('ui.load', [])
         var profile = {
             isAdmins: false
         };
+        var opciones = {
+            menu1: false,
+            menu2: false,
+            menu3: false,
+            menu4: false,
+            menu5: false,
+            menu6: false
+    };
+
         function currentUser() {
 
         }
-        var setProfile = function (isAdmins) {
+        var setProfile = function (isAdmins, opcion) {
             localStorageService.set('Rol', { 'IsAdmin': isAdmins });//
+            localStorageService.set('Opciones', { 'Menu1': opcion.opcion1, 'Menu2': opcion.opcion2, 'Menu3': opcion.opcion3, 'Menu4': opcion.opcion4, 'Menu5': opcion.opcion5, 'Menu6': opcion.opcion6 });//
         };
         var getProfile = function () {
             var a = localStorageService.get('Rol');//
             profile = a.IsAdmin;//
             return profile;//
         };
+        var getOpcion1 = function () {
+            var b = localStorageService.get('Opciones');//
+            opciones.menu1 = b.Menu1;
+            if (opciones.menu1 == "1")
+                return true;
+            else {
+                return false;
+            }
+
+        };
+        var getOpcion2 = function () {
+            var b = localStorageService.get('Opciones');//
+            opciones.menu2 = b.Menu2;
+            if (opciones.menu2 == "2")
+                return true;
+            else {
+                return false;
+            }
+
+        };
+        var getOpcion3 = function () {
+            var b = localStorageService.get('Opciones');//
+            opciones.menu3 = b.Menu3;
+            if (opciones.menu3 == "3")
+                return true;
+            else {
+                return false;
+            }
+
+        };
+        var getOpcion4 = function () {
+            var b = localStorageService.get('Opciones');//
+            opciones.menu4 = b.Menu4;
+            if (opciones.menu4 == "4")
+                return true;
+            else {
+                return false;
+            }
+
+        };
+        var getOpcion5 = function () {
+            var b = localStorageService.get('Opciones');//
+            opciones.menu5 = b.Menu5;
+            if (opciones.menu5 == "5")
+                return true;
+            else {
+                return false;
+            }
+
+        };
+        var getOpcion6 = function () {
+            var b = localStorageService.get('Opciones');//
+            opciones.menu6 = b.Menu6;
+            if (opciones.menu6 == "6")
+                return true;
+            else {
+                return false;
+            }
+
+        };
         return {
             setProfile: setProfile,
-            getProfile: getProfile
+            getProfile: getProfile,
+            getOpcion1: getOpcion1,
+            getOpcion2: getOpcion2,
+            getOpcion3: getOpcion3,
+            getOpcion4: getOpcion4,
+            getOpcion5: getOpcion5,
+            getOpcion6: getOpcion6
         }
     }])
     .factory('departmentService', ['$http', '$q', function ($http, $q) {

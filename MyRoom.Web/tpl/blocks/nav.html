@@ -53,7 +53,7 @@
             <span translate="aside.nav.components.pages.CONTENTMANAGEMENT">Content Management</span>
         </a>
         <ul class="nav nav-sub dk">
-            <li>
+            <li ng-show="menuAccesCatalogueStructure()">
                 <a ui-sref="app.page.catalogue_create">
                     <span translate="aside.nav.components.pages.CATALOGUES">Create/Modify Catalogues Structure</span>
                 </a>
@@ -63,18 +63,18 @@
                     <span translate="aside.nav.components.pages.HOTEL_CATALOGUES1">Assign Catalogues To Hotels</span>
                 </a>
             </li>
-            <li>
+            <li ng-show="menuAccesProducts()">
                 <a ui-sref="app.page.product_list">
                     <span translate="aside.nav.components.pages.PROD">Create/Modify Products</span>
                 </a>
             </li>
 
-            <li>
+            <li ng-show="menuAccesAssignProductsCatalogues()">
                 <a ui-sref="app.page.catalogue_assignProducts">
                     <span translate="aside.nav.components.pages.CATALOG_ASSIGNPROD">Assign Products to Catalogues</span>
                 </a>
             </li>
-            <li>
+            <li ng-show="menuAccesAssignCataloguesHotels()">
                 <a ui-sref="app.page.hotel_assignProducts">
                     <span translate="aside.nav.components.pages.HOTEL_CATALOGUES_ITEMS">Assign Catalogues Items To Hotels</span>
                 </a>

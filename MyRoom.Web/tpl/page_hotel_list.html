@@ -10,8 +10,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <button class="btn m-b-xs btn-md btn-info btn-addon ng-pristine ng-valid ng-touched" ng-click="createHotel()"><i class="fa fa-plus"></i>Create</button>
-                    <button class="btn m-b-xs btn-md btn-info btn-addon ng-pristine ng-valid ng-touched" ng-click="assignCatalog()"><i class="fa fa-file-archive-o"></i><span translate="aside.nav.components.pages.HOTEL_CATALOGUES">Assign Catalogues</span></button>
-                    <button class="btn m-b-xs btn-md btn-info btn-addon ng-pristine ng-valid ng-touched" ng-click="assignCatalogItems()"><i class="fa fa-file-text-o"></i> <span translate="aside.nav.components.pages.HOTEL_ASSIGNPROD" class="ng-scope">Assign Catalogues Ítems</span></button>
+                    <button class="btn m-b-xs btn-md btn-info btn-addon ng-pristine ng-valid ng-touched" ng-click="assignCatalog()" ng-show="menuAccesAssignCataloguesHotels()"><i class="fa fa-file-archive-o"></i><span translate="aside.nav.components.pages.HOTEL_CATALOGUES">Assign Catalogues</span></button>
+                    <button class="btn m-b-xs btn-md btn-info btn-addon ng-pristine ng-valid ng-touched" ng-click="assignCatalogItems()" ng-show="menuAccesActivateProductsHotel()"><i class="fa fa-file-text-o"></i> <span translate="aside.nav.components.pages.HOTEL_ASSIGNPROD" class="ng-scope">Assign Catalogues Ítems</span></button>
              
                  </div>
                 <div class="modal fade" id="deleteHotel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
