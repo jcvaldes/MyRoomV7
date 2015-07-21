@@ -216,7 +216,11 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
         }
         else {
             vm.Pending = false;
-            vm.UrlScanDocument = entity.UrlScanDocument;
+            if (entity.UrlScanDocument == "/img/no-image.jpg") {
+                vm.UrlScanDocument = null;
+            } else {
+                vm.UrlScanDocument = entity.UrlScanDocument;
+            }
             vm.CatalogId = $state.params.catalog;
         }
         vm.HotelId = $state.params.hotel;
@@ -391,8 +395,7 @@ app.controller('ProductsListController', ['$scope', '$http', '$state', 'productS
             }
 
             var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, department: $scope.department.selected.DepartmentId };
-
-            if (!currentUser.getOpcion2())
+            //if (!currentUser.getOpcion2())
                 $state.go('app.page.product_create', result);
         };
 
