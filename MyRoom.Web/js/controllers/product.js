@@ -203,10 +203,14 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
         if (entity.UrlScanDocument != "/img/no-image.jpg") {
             vm.Pending = true;
             if ($state.current.name == "app.page.product_edit") {
-                if (entity.UrlScanDocument.split('/').length > 1)
-                    vm.UrlScanDocument = entity.UrlScanDocument;
-                else
-                    vm.UrlScanDocument = "/images/" + $state.params.catalog + "/moreinfo/" + entity.UrlScanDocument;
+                if (entity.UrlScanDocument != null) {
+                    if (entity.UrlScanDocument.split('/').length > 1)
+                        vm.UrlScanDocument = entity.UrlScanDocument;
+                    else
+                        vm.UrlScanDocument = "/images/" + $state.params.catalog + "/moreinfo/" + entity.UrlScanDocument;
+                } else {
+                    entity.UrlScanDocument = null;
+                }
             }
             else {
                 vm.UrlScanDocument = "/images/" + $state.params["catalog"] + "/moreinfo/" + entity.UrlScanDocument;
