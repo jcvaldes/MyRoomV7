@@ -408,9 +408,9 @@ app.controller('ProductsListController', ['$scope', '$localStorage', '$http', '$
             if ($scope.department.selected !== undefined)
                 $scope.IdDepartment = $scope.department.selected.DepartmentId;
 
-            var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, department: $scope.IdDepartment };
+            $localStorage.selectedProduct = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, department: $scope.IdDepartment };
             //if (!currentUser.getOpcion2())
-                $state.go('app.page.product_create', result);
+                $state.go('app.page.product_create');
         };
 
         $scope.modifyProduct = function (id) {
