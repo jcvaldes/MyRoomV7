@@ -311,8 +311,13 @@
                       
                           if ($scope.hotel.selected != undefined) {
                               hotelService.getHotelCatalogId($scope.hotel.selected.Id).then(function (response) {
-                                  if(response.data.length>0)
+                                  if (response.data.length > 0) {
                                       $scope.$parent.IdCatalog = response.data[0].IdCatalogue;
+                                      $scope.IdCatalog = response.data[0].IdCatalogue;
+                                  } else {
+                                      $scope.$parent.IdCatalog = 0;
+                                      $scope.IdCatalog = 0;
+                                  }
 
                                   if ($scope.$parent.$state.$current.name !== "app.page.product_list" && $scope.$parent.$state.$current.name !== "app.page.catalogue_assignProducts" && $scope.$parent.$state.$current.name !== "app.page.room_edit" ) {
                                       $scope.loadHotelTreeCatalog($scope.IdCatalog);
@@ -323,7 +328,7 @@
 
                       hotelService.getAll().then(function(response) {
                             $scope.hotel = response.data;
-                            $scope.hotels = [$scope.hotel.length]
+                            $scope.hotels = [$scope.hotel.length];
 
                             angular.forEach($scope.hotel, function(value, key) {
                                 $scope.hotels[key] = { Id: value.HotelId, Name: value.Name };
@@ -343,8 +348,10 @@
                                     $scope.products = response.data;
                                 });
                                 if ($scope.hotel.selected != undefined) {
-                                    hotelService.getHotelCatalogId($scope.hotel.selected.Id).then(function(response) {
-                                        $scope.IdCatalog = response.data[0].IdCatalogue;
+                                    hotelService.getHotelCatalogId($scope.hotel.selected.Id).then(function (response) {
+                                        if (response.data.length > 0)
+                                            $scope.IdCatalog = response.data[0].IdCatalogue;
+                                        else $scope.IdCatalog = 0;
                                         if ($scope.$parent.$state.$current.name !== "app.page.product_list" && $scope.$parent.$state.$current.name !== "app.page.catalogue_assignProducts" && $scope.$parent.$state.$current.name !== "app.page.room_edit")
                                             $scope.$parent.loadHotelTreeCatalog($scope.IdCatalog);
                                     });

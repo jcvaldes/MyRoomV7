@@ -413,10 +413,10 @@ app.controller('ProductsListController', ['$scope', '$http', '$state', 'productS
                 $scope.toaster = {
                     type: 'error',
                     title: 'Error',
-                    text: 'Selected Catalog'
+                    text: 'Hotel has not Assign Catalog'
                 };
                 $scope.pop();
-                return;
+                //return;
             }
             $scope.currentProdId = id;
 
