@@ -157,7 +157,7 @@ app.controller('ProductsController', ['$scope', '$localStorage', '$http', '$stat
 
     }
     else {
-        productService.getRelatedProductsByHotelId($state.params['hotel']).then(function (response) {
+        productService.getRelatedProductsByHotelId($localStorage.selectedProduct.hotel).then(function (response) {
 
             $scope.products = response.data;
         },
@@ -186,18 +186,18 @@ app.controller('ProductsController', ['$scope', '$localStorage', '$http', '$stat
                 if (entity.Image.split('/').length > 1)
                     vm.Image = entity.Image;
                 else
-                    vm.Image = "/images/" + $state.params.catalog + "/products/" + entity.Image;
+                    vm.Image = "/images/" + $localStorage.selectedProduct.catalog + "/products/" + entity.Image;
             }
             else {
-                vm.Image = "/images/" + $state.params["catalog"] + "/products/" + entity.Image;
+                vm.Image = "/images/" + $localStorage.selectedProduct.catalog + "/products/" + entity.Image;
             }
-            vm.CatalogId = $state.params.catalog;
+            vm.CatalogId = $localStorage.selectedProduct.catalog;
 
         }
         else {
             vm.Pending = false;
             vm.Image = entity.Image;
-            vm.CatalogId = $state.params.catalog;         
+            vm.CatalogId = $localStorage.selectedProduct.catalog;
         }
 
         if (entity.UrlScanDocument != "/img/no-image.jpg") {
@@ -212,15 +212,15 @@ app.controller('ProductsController', ['$scope', '$localStorage', '$http', '$stat
                     if (entity.UrlScanDocument.split('/').length > 1)
                         vm.UrlScanDocument = entity.UrlScanDocument;
                     else
-                        vm.UrlScanDocument = "/images/" + $state.params.catalog + "/moreinfo/" + entity.UrlScanDocument;
+                        vm.UrlScanDocument = "/images/" + $localStorage.selectedProduct.catalog + "/moreinfo/" + entity.UrlScanDocument;
                 } else {
                     entity.UrlScanDocument = null;
                 }
             }
             else {
-                vm.UrlScanDocument = "/images/" + $state.params["catalog"] + "/moreinfo/" + entity.UrlScanDocument;
+                vm.UrlScanDocument = "/images/" + $localStorage.selectedProduct.catalog + "/moreinfo/" + entity.UrlScanDocument;
             }
-            vm.CatalogId = $state.params.catalog;
+            vm.CatalogId = $localStorage.selectedProduct.catalog;
 
         }
         else {
@@ -230,9 +230,9 @@ app.controller('ProductsController', ['$scope', '$localStorage', '$http', '$stat
             } else {
                 vm.UrlScanDocument = entity.UrlScanDocument;
             }
-            vm.CatalogId = $state.params.catalog;
+            vm.CatalogId = $localStorage.selectedProduct.catalog;
         }
-        vm.HotelId = $state.params.hotel;
+        vm.HotelId = $localStorage.selectedProduct.hotel;
         vm.Description = entity.Description;
         vm.Price = entity.Price;
         vm.ProductActive = entity.ProductActive;
@@ -275,11 +275,11 @@ app.controller('ProductsController', ['$scope', '$localStorage', '$http', '$stat
 
     }
     $scope.saveProduct = function () {
-        $scope.IdDepartment = $state.params['department'];
+        $scope.IdDepartment = $localStorage.selectedProduct.department;//Modificar
         $scope.product.IdDepartment = $scope.IdDepartment;
         var productVm = createProductVM($scope.product);
-        if ($state.current.name == "app.page.product_create" && $state.params['catalog']) {
-            $scope.IdCatalog = $state.params['catalog'];
+        if ($state.current.name == "app.page.product_create" ) {
+            $scope.IdCatalog = $localStorage.selectedProduct.catalog;//$state.params['catalog'];
             $scope.rootFile = '/images/' + $scope.IdCatalog + '/';
     
             productService.saveProduct(productVm).then(function (response) {
@@ -346,7 +346,7 @@ app.controller('ProductsController', ['$scope', '$localStorage', '$http', '$stat
                     RelatedProducts: []
                 };
                 
-                $state.go('app.page.product_list', { 'hotel': $scope.$stateParams.hotel });
+                $state.go('app.page.product_list', { 'hotel': $localStorage.selectedProduct.hotel });
             },
             function (err) {
                 $scope.toaster = {
@@ -404,8 +404,11 @@ app.controller('ProductsListController', ['$scope', '$localStorage', '$http', '$
                 $scope.pop();
                 return;
             }
+            $scope.IdDepartment = 0;
+            if ($scope.department.selected !== undefined)
+                $scope.IdDepartment = $scope.department.selected.DepartmentId;
 
-            var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, department: $scope.department.selected.DepartmentId };
+            var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, department: $scope.IdDepartment };
             //if (!currentUser.getOpcion2())
                 $state.go('app.page.product_create', result);
         };

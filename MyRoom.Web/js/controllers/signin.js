@@ -24,7 +24,6 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', 'authServic
    //});
 
     $scope.login = function () {
-        debugger;
         $scope.authError = '';
         authService.login($scope.user).then(function (response) {
             var rol = false;
