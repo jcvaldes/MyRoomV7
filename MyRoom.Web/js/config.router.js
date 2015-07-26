@@ -473,7 +473,7 @@ angular.module('app')
                   }
               })
               .state('app.page.product_edit', {
-                  url: '/products/edit/',
+                  url: '/products/edit/:id',
                   templateUrl: 'tpl/page_product_edit.html',
                   params: { 'hotel': null, 'catalog': null, 'product': null, 'department': null },
                   resolve: {

@@ -1,7 +1,7 @@
 ﻿'use strict';
 /* Controllers */
 // product controller
-app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams', 'productService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter', 'toaster', '$timeout', 'FileUploader', 'ngWebBaseSettings', function ($scope, $http, $state, $stateParams, productService, DTOptionsBuilder, DTColumnDefBuilder, $filter, toaster, $timeout, FileUploader, ngWebBaseSettings) {
+app.controller('ProductsController', ['$scope', '$localStorage', '$http', '$state', '$stateParams', 'productService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter', 'toaster', '$timeout', 'FileUploader', 'ngWebBaseSettings', function ($scope, $localStorage, $http, $state, $stateParams, productService, DTOptionsBuilder, DTColumnDefBuilder, $filter, toaster, $timeout, FileUploader, ngWebBaseSettings) {
     var uploader = $scope.uploader = new FileUploader({
         //url: ngWebBaseSettings.webServiceBase + 'api/files/Upload?var=5-0-0'
     });
@@ -104,20 +104,20 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
     };
 
     
-    if ($state.current.name == "app.page.product_edit" && $state.params['catalog']) {
-        
+    if ($state.current.name == "app.page.product_edit") {
+  
 //        var param = $state.params['catalog'].split("-");
   //      var id = param[1];
-        var idCatalog = $state.params['catalog'];//.param[0];
+        var idCatalog = $localStorage.selectedProduct.catalog;
         $scope.IdCatalog = idCatalog;
         
-        productService.getProduct($state.params['product']).then(function (response) {
+        productService.getProduct($state.params['id']).then(function (response) {
             $scope.product = JSON.parse(response.data);
             $scope.rootFile = '/images/' + $scope.IdCatalog + '/products/';
          
         });
 
-        productService.getRelatedProducts($state.params['product'], $state.params['hotel']).then(function (response) {
+        productService.getRelatedProducts($state.params['id'], $localStorage.selectedProduct.hotel).then(function (response) {
             $scope.products = response.data;
 
             //for (var j = 0 ; j < $scope.product.RelatedProducts.length; j++) {
@@ -270,7 +270,9 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
         return vm;
     }
     $scope.cancel = function () {
-        $state.go('app.page.product_list', { 'hotel': $scope.$stateParams.hotel });
+        $state.go('app.page.product_list', { 'hotel': $localStorage.selectedProduct.hotel });
+        delete $localStorage.selectedProduct;
+
     }
     $scope.saveProduct = function () {
         $scope.IdDepartment = $state.params['department'];
@@ -362,7 +364,7 @@ app.controller('ProductsController', ['$scope', '$http', '$state', '$stateParams
 
 //    $scope.getAllProduct();
 }]);
-app.controller('ProductsListController', ['$scope', '$http', '$state', 'productService', '$injector', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'toaster', '$timeout', 'currentUser', function ($scope, $http, $state, productService, $injector, DTOptionsBuilder, DTColumnDefBuilder, toaster, $timeout, currentUser) {
+app.controller('ProductsListController', ['$scope', '$localStorage', '$http', '$state', 'productService', '$injector', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'toaster', '$timeout', 'currentUser', function ($scope, $localStorage, $http, $state, productService, $injector, DTOptionsBuilder, DTColumnDefBuilder, toaster, $timeout, currentUser) {
     $scope.products = {};
     $scope.currentProdId = 0;
     $scope.IdCatalog = 0;
@@ -411,12 +413,11 @@ app.controller('ProductsListController', ['$scope', '$http', '$state', 'productS
         $scope.modifyProduct = function (id) {
             if ($scope.IdCatalog == 0) {
                 $scope.toaster = {
-                    type: 'error',
-                    title: 'Error',
+                    type: 'warning',
+                    title: 'Warning',
                     text: 'Hotel has not Assign Catalog'
                 };
                 $scope.pop();
-                //return;
             }
             $scope.currentProdId = id;
 
@@ -424,11 +425,12 @@ app.controller('ProductsListController', ['$scope', '$http', '$state', 'productS
             if ($scope.department.selected !== undefined)
                 $scope.IdDepartment = $scope.department.selected.DepartmentId;
                 
-            var result = { hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, product: id, department: $scope.IdDepartment };
+            $localStorage.selectedProduct = { id: id, hotel: $scope.hotel.selected.Id, catalog: $scope.IdCatalog, department: $scope.IdDepartment };
 
-            $state.go('app.page.product_edit', result);
+            //$state.go('app.page.product_edit', result);
 
-//            $state.go('app.page.product_edit', { "id": $scope.IdCatalog + '-' + id });
+            //$state.go('app.page.product_edit', { "id": $scope.IdCatalog + '-' + id });
+            $state.go('app.page.product_edit', { "id": id });
         }
 
         $scope.selectProduct = function (id) {
