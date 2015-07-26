@@ -341,8 +341,15 @@
                                 if ($scope.$parent.$state.params.hotel) {
                                     var idx = $filter('getHotelKeyById')($scope.hotels, $scope.$state.params.hotel)
                                     $scope.hotel.selected = $scope.hotels[idx];
-                                } else
+                                    hotelService.getDeparmentsActivated($scope.hotel.selected.Id).then(function (response) {
+                                        $scope.departments = response.data;
+                                    });
+                                } else {
                                     $scope.hotel.selected = $scope.hotels[0];
+                                    hotelService.getDeparmentsActivated($scope.hotel.selected.Id).then(function (response) {
+                                        $scope.departments = response.data;
+                                    });
+                                }
 
                                 hotelService.getProductsActivated($scope.hotel.selected.Id).then(function(response) {
                                     $scope.products = response.data;
