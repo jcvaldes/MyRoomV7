@@ -364,7 +364,7 @@ app.controller('ProductsController', ['$scope', '$localStorage', '$http', '$stat
 
 //    $scope.getAllProduct();
 }]);
-app.controller('ProductsListController', ['$scope', '$localStorage', '$http', '$state', 'productService', '$injector', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'toaster', '$timeout', 'currentUser', function ($scope, $localStorage, $http, $state, productService, $injector, DTOptionsBuilder, DTColumnDefBuilder, toaster, $timeout, currentUser) {
+app.controller('ProductsListController', ['$scope', '$localStorage', '$http', '$state', 'productService', '$injector', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'toaster', '$timeout', 'currentUser', 'departmentService', function ($scope, $localStorage, $http, $state, productService, $injector, DTOptionsBuilder, DTColumnDefBuilder, toaster, $timeout, currentUser, departmentService) {
     $scope.products = {};
     $scope.currentProdId = 0;
     $scope.IdCatalog = 0;
@@ -454,10 +454,12 @@ app.controller('ProductsListController', ['$scope', '$localStorage', '$http', '$
                         Active: true
                     }
                 };
-
                 $scope.toaster = { type: 'Success', title: 'Success', text: 'The Product has been removed' };
                 $scope.pop();
                 hotelService.getProductsActivated($scope.hotel.selected.Id).then(function (response) {
+                    $scope.products = response.data;
+                });
+                departmentService.getProductssActivated($scope.department.selected.DepartmentId).then(function (response) {
                     $scope.products = response.data;
                 });
             },
