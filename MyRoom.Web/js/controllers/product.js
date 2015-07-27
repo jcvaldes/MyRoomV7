@@ -444,7 +444,7 @@ app.controller('ProductsListController', ['$scope', '$localStorage', '$http', '$
         }
 
         $scope.removeProduct = function (id) {
-            productService.removeProduct(id).then(function (response) {
+            productService.removeProduct(id).then(function(response) {
                 var hotelService = $injector.get("hotelService");
                 //$scope.Id = response.data.Id;
                 $scope.product = {
@@ -456,12 +456,15 @@ app.controller('ProductsListController', ['$scope', '$localStorage', '$http', '$
                 };
                 $scope.toaster = { type: 'Success', title: 'Success', text: 'The Product has been removed' };
                 $scope.pop();
-                hotelService.getProductsActivated($scope.hotel.selected.Id).then(function (response) {
-                    $scope.products = response.data;
-                });
-                departmentService.getProductssActivated($scope.department.selected.DepartmentId).then(function (response) {
-                    $scope.products = response.data;
-                });
+                if ($scope.department.selected == undefined) {
+                    hotelService.getProductsActivated($scope.hotel.selected.Id).then(function(response) {
+                        $scope.products = response.data;
+                    });
+                } else {
+                    departmentService.getProductssActivated($scope.department.selected.DepartmentId).then(function(response) {
+                        $scope.products = response.data;
+                    });
+                }
             },
             function (err) {
                 $scope.toaster = { type: 'info', title: 'Info', text: err.data.Message };
