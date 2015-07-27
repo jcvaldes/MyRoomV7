@@ -22,7 +22,7 @@ namespace MyRoom.Data.Repositories
         {
             if (deleteUserCatalog)
             {
-                this.DeleteUserCatalog(userCatalog.UserId);
+                //this.DeleteUserCatalog(userCatalog.UserId);
             }
 
             this.Insert(new RelUserCatalogue()

@@ -49,7 +49,7 @@ namespace MyRoom.API.Controllers
         }
 
         // PUT: api/Categories/
-        [Authorize(Roles = "Admins")]
+        //[Authorize(Roles = "Admins")]
         public async Task<IHttpActionResult> PutCategories(Category category)
         {
 
@@ -106,7 +106,7 @@ namespace MyRoom.API.Controllers
         //    }
         //}
         // POST: api/Categories
-        [Authorize(Roles = "Admins")]
+        //[Authorize(Roles = "Admins")]
         public IHttpActionResult PostCategories(CategoryViewModel categoryViewModel)
         {
             if (!ModelState.IsValid)
@@ -150,7 +150,7 @@ namespace MyRoom.API.Controllers
         }
 
         // POST: api/categories/assignproducts
-        [Authorize(Roles = "Admins")]
+        //[Authorize(Roles = "Admins")]
         [Route("assignproducts")]
         [HttpPost]
         public IHttpActionResult  PostCategoryAssignProducts(CategoryProductViewModel categoryAssignProductViewModel)
@@ -182,7 +182,7 @@ namespace MyRoom.API.Controllers
         }
 
         // DELETE: api/Categories/5
-        [Authorize(Roles = "Admins")]
+        //[Authorize(Roles = "Admins")]
         [Route("{key}")]
         [HttpDelete]
         [HasCategoriesChildrenActionFilter]
