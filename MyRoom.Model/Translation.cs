@@ -15,6 +15,7 @@ namespace MyRoom.Model
         {
             Catalogues = new HashSet<Catalog>();
             Categories = new HashSet<Category>();
+            Categories1 = new HashSet<Category>();
             Hotels = new HashSet<Hotel>();
             Modules = new HashSet<Module>();
             Products = new HashSet<Product>();
