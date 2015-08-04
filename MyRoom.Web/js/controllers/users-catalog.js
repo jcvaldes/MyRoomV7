@@ -14,7 +14,7 @@
         },
         function (err) {
             $scope.toaster = {
-                type: 'error', title: 'Error', text: err.error_description
+                type: 'error', title: 'Error', text: 'Assigned User Catalog '
             };
             $scope.pop();
         });
