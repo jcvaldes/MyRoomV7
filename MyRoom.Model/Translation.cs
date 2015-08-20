@@ -27,11 +27,11 @@ namespace MyRoom.Model
         public int Id { get; set; }
 
         [Column(TypeName = "ntext")]
-        [Required]
+        //[Required]
         public string Spanish { get; set; }
 
         [Column(TypeName = "ntext")]
-        [Required]
+        //[Required]
         public string English { get; set; }
 
         [Column(TypeName = "ntext")]

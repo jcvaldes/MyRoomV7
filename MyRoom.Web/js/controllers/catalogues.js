@@ -427,7 +427,9 @@ app.controller('CataloguesController', ['$scope', '$http', '$state', 'catalogSer
             $scope.pop();
             return;
         }
+
         var categoryViewModel = createCategoryVM($scope.category);
+
         if ($scope.IsNew) {
             //$scope.category.Modules = [{ ModuleId: $scope.IdModule, Name: 'Module', Active: true }];
 
@@ -531,8 +533,6 @@ app.controller('CataloguesController', ['$scope', '$http', '$state', 'catalogSer
         vm.Language6 = entity.Translation.Language6;
         vm.Language7 = entity.Translation.Language7;
         vm.Language8 = entity.Translation.Language8;
-
-
         vm.SpanishDesc = entity.TranslationDescription.Spanish;
         vm.EnglishDesc = entity.TranslationDescription.English;
         vm.FrenchDesc = entity.TranslationDescription.French;
